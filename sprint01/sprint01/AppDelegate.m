@@ -18,10 +18,9 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     self.window=[[UIWindow alloc]initWithFrame:[[UIScreen mainScreen]bounds]];
-    viewController = [[[MyTableViewController alloc]init] autorelease];//
+    viewController = [[MyTableViewController alloc]init];//
     self.window.rootViewController=viewController;
     [self.window makeKeyAndVisible];
-    [self.window autorelease];
     
     return YES;
 }
@@ -47,10 +46,6 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
-//-(void)dealloc{
-  //  [window release];
-    //[viewController release];
-    //[super dealloc];
-//}
+
 
 @end

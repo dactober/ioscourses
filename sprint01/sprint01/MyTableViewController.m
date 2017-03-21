@@ -21,8 +21,8 @@
     self.tableData=[NSArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"TableList" ofType:@"plist"]];
     UITableView *tableView = [[UITableView alloc] initWithFrame:[[UIScreen mainScreen]bounds] style:UITableViewStylePlain];
     self.mainTableView = tableView;
-    [tableView release];
-    //self.automaticallyAdjustsScrollViewInsets=NO;
+    
+    
     [self.mainTableView setContentInset:UIEdgeInsetsMake(20, 0, 0, 0)];
     self.mainTableView.separatorStyle=UITableViewCellSeparatorStyleNone;
     self.mainTableView.autoresizingMask=UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
@@ -57,12 +57,7 @@
     return cell;
 }
 
--(void)dealloc{
-    
-    [self.tableData release];
-    [self.tableDictionary release];
-    [super dealloc];
-}
+
 
 
 @end

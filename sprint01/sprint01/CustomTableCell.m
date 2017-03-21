@@ -43,10 +43,5 @@
     frame=CGRectMake(boundsX+70, 30, 100, 15);
     subTitleLabel.frame=frame;
 }
--(void)dealloc{
-    [titleLabel release];
-    [subTitleLabel release];
-    [cellImage release];
-    [super dealloc];
-}
+
 @end
