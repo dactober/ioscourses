@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>title</key>
+		<string>egg benedict</string>
+		<key>subtitle</key>
+		<string>30 min</string>
+		<key>image_name</key>
+		<string>egg_benedict.jpg</string>
+	</dict>
+	<dict>
+		<key>title</key>
+		<string>risotto</string>
+		<key>subtitle</key>
+		<string>30 min</string>
+		<key>image_name</key>
+		<string>mushroom_risotto.jpg</string>
+	</dict>
+	<dict>
+		<key>title</key>
+		<string>breakfast</string>
+		<key>subtitle</key>
+		<string>20 min</string>
+		<key>image_name</key>
+		<string>full_breakfast.jpg</string>
+	</dict>
+	<dict>
+		<key>title</key>
+		<string>hamburger</string>
+		<key>subtitle</key>
+		<string>15 min</string>
+		<key>image_name</key>
+		<string>hamburger.jpg</string>
+	</dict>
+</array>
+</plist>
