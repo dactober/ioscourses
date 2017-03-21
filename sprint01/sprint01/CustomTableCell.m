@@ -16,13 +16,11 @@
     if(self){
         
         titleLabel=[[UILabel alloc]init];
-        titleLabel.font=[UIFont systemFontOfSize:16];
+        
         subTitleLabel=[[UILabel alloc]init];
-        subTitleLabel.font=[UIFont systemFontOfSize:10];
+        
         cellImage=[[UIImageView alloc]init];
-        [self addSubview:self.titleLabel];
-        [self addSubview:self.subTitleLabel];
-        [self addSubview:self.cellImage];
+        
     }
     return self;
 }
@@ -31,17 +29,6 @@
     titleLabel.text=[dict objectForKey:@"title"];
     subTitleLabel.text=[dict objectForKey:@"subtitle"];
 }
--(void)layoutSubviews{
-    [super layoutSubviews];
-    CGRect contentRect=self.contentView.bounds;
-    CGFloat boundsX=contentRect.origin.x;
-    CGRect frame;
-    frame=CGRectMake(boundsX+10, 0, 50, 50);
-    cellImage.frame=frame;
-    frame=CGRectMake(boundsX+70, 5, 200, 25);
-    titleLabel.frame=frame;
-    frame=CGRectMake(boundsX+70, 30, 100, 15);
-    subTitleLabel.frame=frame;
-}
+
 
 @end

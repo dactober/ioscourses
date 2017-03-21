@@ -10,7 +10,6 @@
 
 @interface MyTableViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic,strong) NSArray *tableData;
-@property (nonatomic,strong) UITableView *mainTableView;
 @property (nonatomic,strong) NSDictionary *tableDictionary;
 
 @end

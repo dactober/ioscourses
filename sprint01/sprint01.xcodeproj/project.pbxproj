@@ -26,6 +26,7 @@
 		01244EE51E81876400E39CD5 /* mushroom_risotto.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 01244EDC1E81876300E39CD5 /* mushroom_risotto.jpg */; };
 		01244EE61E81876400E39CD5 /* MyTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01244EDE1E81876300E39CD5 /* MyTableViewController.m */; };
 		01244EE71E81876400E39CD5 /* TableList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 01244EDF1E81876400E39CD5 /* TableList.plist */; };
+		01A5BF731E81AE21002C26FF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 01A5BF721E81AE21002C26FF /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +65,7 @@
 		01244EDD1E81876300E39CD5 /* MyTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTableViewController.h; sourceTree = "<group>"; };
 		01244EDE1E81876300E39CD5 /* MyTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTableViewController.m; sourceTree = "<group>"; };
 		01244EDF1E81876400E39CD5 /* TableList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TableList.plist; sourceTree = "<group>"; };
+		01A5BF721E81AE21002C26FF /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +135,7 @@
 				01244EDC1E81876300E39CD5 /* mushroom_risotto.jpg */,
 				01244EDD1E81876300E39CD5 /* MyTableViewController.h */,
 				01244EDE1E81876300E39CD5 /* MyTableViewController.m */,
+				01A5BF721E81AE21002C26FF /* Main.storyboard */,
 				01244EDF1E81876400E39CD5 /* TableList.plist */,
 				01244EA51E81763800E39CD5 /* Images.xcassets */,
 				01244E941E81763800E39CD5 /* Supporting Files */,
@@ -248,6 +251,7 @@
 				01244EA61E81763800E39CD5 /* Images.xcassets in Resources */,
 				01244E981E81763800E39CD5 /* InfoPlist.strings in Resources */,
 				01244EE71E81876400E39CD5 /* TableList.plist in Resources */,
+				01A5BF731E81AE21002C26FF /* Main.storyboard in Resources */,
 				01244EE31E81876400E39CD5 /* full_breakfast.jpg in Resources */,
 				01244EE21E81876400E39CD5 /* egg_benedict.jpg in Resources */,
 				01244EE51E81876400E39CD5 /* mushroom_risotto.jpg in Resources */,
