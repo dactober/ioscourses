@@ -17,10 +17,7 @@
 @synthesize window;
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    //self.window=[[UIWindow alloc]initWithFrame:[[UIScreen mainScreen]bounds]];
-   // viewController = [[MyTableViewController alloc]init];//
-   // self.window.rootViewController=viewController;
-   // [self.window makeKeyAndVisible];
+   
     
     return YES;
 }

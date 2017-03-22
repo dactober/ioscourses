@@ -6,18 +6,39 @@
 		<key>title</key>
 		<string>egg benedict</string>
 		<key>subtitle</key>
-		<string>30 min</string>
+		<string>30 min-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+
+    CustomTableCell *cell=(CustomTableCell *)[tableView dequeueReusableCellWithIdentifier:myId forIndexPath:indexPath];
+    
+    self.tableDictionary =[self.tableData objectAtIndex:indexPath.row];
+    [cell customCellData:self.tableDictionary];
+    [cell setNeedsUpdateConstraints];
+    [cell updateConstraintsIfNeeded];
+    return cell;
+}</string>
 		<key>image_name</key>
 		<string>egg_benedict.jpg</string>
 	</dict>
+
+
 	<dict>
 		<key>title</key>
 		<string>risotto</string>
 		<key>subtitle</key>
-		<string>30 min</string>
+		<string>30 min-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+
+    CustomTableCell *cell=(CustomTableCell *)[tableView dequeueReusableCellWithIdentifier:myId forIndexPath:indexPath];
+    
+    self.tableDictionary =[self.tableData objectAtIndex:indexPath.row];
+    [cell customCellData:self.tableDictionary];
+    [cell setNeedsUpdateConstraints];
+    [cell updateConstraintsIfNeeded];
+    return cell;
+}</string>
 		<key>image_name</key>
 		<string>mushroom_risotto.jpg</string>
 	</dict>
+
 	<dict>
 		<key>title</key>
 		<string>breakfast</string>
