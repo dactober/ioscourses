@@ -29,6 +29,10 @@
     titleLabel.text=[dict objectForKey:@"title"];
     subTitleLabel.text=[dict objectForKey:@"subtitle"];
 }
-
+-(void)layoutSubviews{
+    [super layoutSubviews];
+    [self.contentView layoutIfNeeded];
+    self.subTitleLabel.preferredMaxLayoutWidth=CGRectGetWidth(self.subTitleLabel.frame);
+}
 
 @end
