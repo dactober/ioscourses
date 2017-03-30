@@ -100,13 +100,15 @@
     [fileManager removeItemAtURL:destinationURL error:NULL];
     BOOL success=[fileManager copyItemAtURL:downloadURL toURL:destinationURL error:&errorCopy];
     if(success){
+        self.progressView.hidden=YES;
         dispatch_async(dispatch_get_main_queue(), ^{
             NSData *data=[NSData dataWithContentsOfFile:[destinationURL path]];
             NSDictionary *json=[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
             self.tableData=[json valueForKey:@"array"];
-            self.progressView.hidden=YES;
+            [self.myTableView reloadData];
             
-                [self.myTableView reloadData];
+            
+            
                         
         });
         
@@ -118,16 +120,15 @@
 -(void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error{
     if(error==nil){
         NSLog(@"Task: %@ completed successfully",task);
+        
     }
     else{
         NSLog(@"Task %@ completed with error: %@",task,[error localizedDescription]);
     }
-    double progress=(double)task.countOfBytesReceived/(double)task.countOfBytesExpectedToReceive;
-    dispatch_async(dispatch_get_main_queue(), ^{
-        self.progressView.progress=progress;
-    });
+    
     self.downloadTask=nil;
-    self.progressView.hidden=YES;
+   
+    
 }
 -(void)URLSessionDidFinishEventsForBackgroundURLSession:(NSURLSession *)session{
     AppDelegate *appDelegate=(AppDelegate *)[[UIApplication sharedApplication]delegate];
@@ -151,7 +152,7 @@
    
     NSURLRequest *request= [NSURLRequest requestWithURL:downloadURL];
     self.downloadTask=[self.session downloadTaskWithRequest:request];
-        [self.downloadTask resume];
+    [self.downloadTask resume];
     self.progressView.hidden=NO;
     
    
