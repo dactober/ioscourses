@@ -35,7 +35,7 @@
                                                         <constraint firstAttribute="height" constant="42" id="kRK-Kz-wlv"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="233" translatesAutoresizingMaskIntoConstraints="NO" id="aF3-dj-0RK">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="233" translatesAutoresizingMaskIntoConstraints="NO" id="aF3-dj-0RK">
                                                     <rect key="frame" x="87" y="25" width="233" height="16"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
@@ -97,17 +97,24 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="KM1-5A-daZ">
+                                <rect key="frame" x="80" y="30" width="150" height="2"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </progressView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="KM1-5A-daZ" firstAttribute="top" secondItem="6gS-ii-VVe" secondAttribute="bottom" constant="10" id="9rD-nS-6t5"/>
                             <constraint firstItem="xOO-rB-YH6" firstAttribute="leading" secondItem="doa-Tt-qup" secondAttribute="leading" id="9vQ-Zi-lD3"/>
                             <constraint firstItem="0EH-FV-SUn" firstAttribute="leading" secondItem="doa-Tt-qup" secondAttribute="leading" constant="20" id="AEJ-dv-IYz"/>
                             <constraint firstItem="xOO-rB-YH6" firstAttribute="leading" secondItem="doa-Tt-qup" secondAttribute="leading" id="BVI-1g-dw0"/>
                             <constraint firstItem="v2i-Fs-QdZ" firstAttribute="top" secondItem="doa-Tt-qup" secondAttribute="top" constant="15" id="Btv-xn-BRJ"/>
                             <constraint firstItem="xOO-rB-YH6" firstAttribute="top" secondItem="6gS-ii-VVe" secondAttribute="bottom" constant="20" id="E4G-BJ-4Cm"/>
                             <constraint firstItem="v2i-Fs-QdZ" firstAttribute="leading" secondItem="0EH-FV-SUn" secondAttribute="trailing" constant="176" id="G86-PE-RVP"/>
+                            <constraint firstAttribute="trailing" secondItem="KM1-5A-daZ" secondAttribute="trailing" constant="90" id="Jee-mh-sgh"/>
                             <constraint firstItem="xOO-rB-YH6" firstAttribute="leading" secondItem="doa-Tt-qup" secondAttribute="leading" id="KWT-Vf-ySq"/>
                             <constraint firstAttribute="trailing" secondItem="xOO-rB-YH6" secondAttribute="trailing" id="OY8-bz-nGK"/>
+                            <constraint firstItem="KM1-5A-daZ" firstAttribute="leading" secondItem="doa-Tt-qup" secondAttribute="leading" constant="80" id="PTN-T6-ghF"/>
                             <constraint firstAttribute="trailing" secondItem="v2i-Fs-QdZ" secondAttribute="trailing" id="Rog-Rs-fM7"/>
                             <constraint firstItem="xOO-rB-YH6" firstAttribute="leading" secondItem="doa-Tt-qup" secondAttribute="leading" id="bCY-tr-ZAq"/>
                             <constraint firstItem="xOO-rB-YH6" firstAttribute="top" secondItem="6gS-ii-VVe" secondAttribute="bottom" constant="20" id="bad-PY-8vW"/>
@@ -122,6 +129,7 @@
                     <connections>
                         <outlet property="loadData" destination="v2i-Fs-QdZ" id="ucs-ZD-GSu"/>
                         <outlet property="myTableView" destination="xOO-rB-YH6" id="lZO-zQ-NfX"/>
+                        <outlet property="progressView" destination="KM1-5A-daZ" id="ioH-xx-2B6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="O86-uw-CUD" userLabel="First Responder" sceneMemberID="firstResponder"/>

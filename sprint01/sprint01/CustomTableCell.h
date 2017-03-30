@@ -11,5 +11,5 @@
 @property (nonatomic,strong) IBOutlet UILabel *subTitleLabel;
 @property (nonatomic,strong) IBOutlet UIImageView *cellImage;
 -(void)customCellData:(NSDictionary*)dict;
-
+-(void)loadImage:(NSDictionary *)dict;
 @end

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MyTableViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface MyTableViewController : UIViewController <UITableViewDelegate, UITableViewDataSource,NSURLSessionDelegate,NSURLSessionTaskDelegate,NSURLSessionDownloadDelegate>
 @property (nonatomic,strong) NSMutableArray *tableData;
 @property (nonatomic,strong) NSDictionary *tableDictionary;
 @property (weak, nonatomic) IBOutlet UITableView *myTableView;
