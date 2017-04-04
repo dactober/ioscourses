@@ -140,17 +140,23 @@
 -(void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didResumeAtOffset:(int64_t)fileOffset expectedTotalBytes:(int64_t)expectedTotalBytes{
     
 }
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    [self performSegueWithIdentifier:@"CellViewController" sender:self];
-}
+//-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+ //   MyTableCellViewController *cellView=[MyTableCellViewController new];
+  //  [self.navigationController pushViewController:cellView animated:NO];
+  //  [self performSegueWithIdentifier:@"CellViewController" sender:self];
+//}
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     if([[segue identifier] isEqualToString:@"CellViewController"]){
+        
         NSIndexPath *indexPath =[self.myTableView indexPathForSelectedRow];
-        MyTableCellViewController *cellViewController=(MyTableCellViewController *)segue.destinationViewController;
-       // CustomTableCell *cell=(CustomTableCell *)[self.myTableView cellForRowAtIndexPath:indexPath];
-        //cellViewController.titleLabel=cell.titleLabel;
-       // cellViewController.subTitleLabel=cell.subTitleLabel;
-       // cellViewController.cellImage=cell.cellImage;
+        MyTableCellViewController *cellView=(MyTableCellViewController *)segue.destinationViewController;
+        CustomTableCell *cell=(CustomTableCell *)[self.myTableView cellForRowAtIndexPath:indexPath];
+        cellView.cell=cell;
+        //cellView.titleLable=cell.titleLabel;
+        //cellView.titleLable.text=@"aa";
+        //cellView.subTitleLable=cell.subTitleLabel;
+        //cellView.cellImage=cell.cellImage;
+        
     }
 }
 - (IBAction)loadData:(id)sender {
