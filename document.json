@@ -1,0 +1,24 @@
+{
+  "array":[
+    {
+        "title": "egg benedict",
+        "subtitle": "30 min",
+        "image_name":"https://api.backendless.com/4B1822F6-55B7-B39A-FF0C-655867D71F00/v1/files/egg_benedict.jpg"
+    },
+    {
+        "title": "risotto",
+        "subtitle": "30 min",
+        "image_name":"https://api.backendless.com/4B1822F6-55B7-B39A-FF0C-655867D71F00/v1/files/mushroom_risotto.jpg"
+    },
+    {
+        "title": "breakfast",
+        "subtitle": "20 min",
+        "image_name":"https://api.backendless.com/4B1822F6-55B7-B39A-FF0C-655867D71F00/v1/files/full_breakfast.jpg"
+    },
+    {
+       "title": "hamburger",
+        "subtitle": "15 min",
+        "image_name":"https://api.backendless.com/4B1822F6-55B7-B39A-FF0C-655867D71F00/v1/files/hamburger.jpg"
+    }
+   ]
+}
