@@ -11,7 +11,9 @@
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-@property (strong, nonatomic) UIViewController *viewController;
+@property (copy)void(^backgroundSessionCompletionHandler)();
+@property (retain,nonatomic) UINavigationController *navigationController;
+
 
 @end
 

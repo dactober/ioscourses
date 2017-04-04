@@ -7,9 +7,9 @@
 //
 #import <UIKit/UIKit.h>
 @interface CustomTableCell : UITableViewCell
-@property (nonatomic,strong) UILabel *titleLabel;
-@property (nonatomic,strong) UILabel *subTitleLabel;
-@property (nonatomic,strong) UIImageView *cellImage;
+@property (nonatomic,strong) IBOutlet UILabel *titleLabel;
+@property (nonatomic,strong) IBOutlet UILabel *subTitleLabel;
+@property (nonatomic,strong) IBOutlet UIImageView *cellImage;
 -(void)customCellData:(NSDictionary*)dict;
 
 @end
