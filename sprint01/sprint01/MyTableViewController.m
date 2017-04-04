@@ -8,6 +8,7 @@
 #import "AppDelegate.h"
 #import "MyTableViewController.h"
 #import "CustomTableCell.h"
+#import "MyTableCellViewController.h"
 
 @interface MyTableViewController ()
 @property (weak, nonatomic) IBOutlet UIProgressView *progressView;
@@ -19,7 +20,6 @@
 @end
 
 @implementation MyTableViewController
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.session =[self backgroundSession];
@@ -33,6 +33,7 @@
     return 1;
     
 }
+
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
     return [self.tableData count];
@@ -106,9 +107,6 @@
             NSDictionary *json=[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
             self.tableData=[json valueForKey:@"array"];
             [self.myTableView reloadData];
-            
-            
-            
                         
         });
         
@@ -142,7 +140,19 @@
 -(void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didResumeAtOffset:(int64_t)fileOffset expectedTotalBytes:(int64_t)expectedTotalBytes{
     
 }
-
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [self performSegueWithIdentifier:@"CellViewController" sender:self];
+}
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if([[segue identifier] isEqualToString:@"CellViewController"]){
+        NSIndexPath *indexPath =[self.myTableView indexPathForSelectedRow];
+        MyTableCellViewController *cellViewController=(MyTableCellViewController *)segue.destinationViewController;
+       // CustomTableCell *cell=(CustomTableCell *)[self.myTableView cellForRowAtIndexPath:indexPath];
+        //cellViewController.titleLabel=cell.titleLabel;
+       // cellViewController.subTitleLabel=cell.subTitleLabel;
+       // cellViewController.cellImage=cell.cellImage;
+    }
+}
 - (IBAction)loadData:(id)sender {
     if(self.downloadTask)
     {
