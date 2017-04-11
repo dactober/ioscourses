@@ -23,11 +23,12 @@
 
 @implementation MyTableViewController
 @synthesize fetchedResultsController=_fetchedResultsController;
+@synthesize managedObjectContext;
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.session =[self backgroundSession];
     self.progressView.hidden =YES;
-
+   // self.fetchedResultsController=nil;
     NSError *error;
     if(![[self fetchedResultsController]performFetch:&error]){
         NSLog(@"Unresolver error %@, %@",error,[error userInfo]);
@@ -40,13 +41,13 @@
         return _fetchedResultsController;
     }
     NSFetchRequest *fetchRequest=[[NSFetchRequest alloc]init];
-    NSEntityDescription *entity=[NSEntityDescription entityForName:@"Food" inManagedObjectContext:_managedObjectContext];
+    NSEntityDescription *entity=[NSEntityDescription entityForName:@"CellData" inManagedObjectContext:managedObjectContext];
     [fetchRequest setEntity:entity];
     
-    NSSortDescriptor *sort=[[NSSortDescriptor alloc]initWithKey:@"details.time" ascending:NO];
+    NSSortDescriptor *sort=[[NSSortDescriptor alloc]initWithKey:@"title" ascending:NO];
     [fetchRequest setSortDescriptors:[NSArray arrayWithObject:sort]];
     [fetchRequest setFetchBatchSize:20];
-    NSFetchedResultsController *theFetchedResultsController=[[NSFetchedResultsController alloc]initWithFetchRequest:fetchRequest managedObjectContext:_managedObjectContext sectionNameKeyPath:nil cacheName:@"Root"];
+    NSFetchedResultsController *theFetchedResultsController=[[NSFetchedResultsController alloc]initWithFetchRequest:fetchRequest managedObjectContext:managedObjectContext sectionNameKeyPath:nil cacheName:@"Root"];
     self.fetchedResultsController=theFetchedResultsController;
     _fetchedResultsController.delegate=self;
     return _fetchedResultsController;
@@ -59,9 +60,9 @@
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    id sectionInfo=[[_fetchedResultsController sections]objectAtIndex:section];
+   id sectionInfo=[[_fetchedResultsController sections]objectAtIndex:section];
     return [sectionInfo numberOfObjects];
-    //return [self.tableData count];
+   // return [self.tableData count];
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
@@ -80,7 +81,7 @@
 
                 CustomTableCell *textCell=(CustomTableCell *)cell;
                 self.tableDictionary =[self.tableData objectAtIndex:indexPath.row];
-                    [textCell customCellData:[self.tableImages objectAtIndex:indexPath.row]];
+                [textCell customCellData:[self.tableImages objectAtIndex:indexPath.row]];
     }
         }
 -(CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -160,10 +161,64 @@ CustomTableCell *cell=(CustomTableCell *)[tableView dequeueReusableCellWithIdent
     
 }
 -(void)createCellData:(int)index image:(UIImage *)downloadImage{
-    CellData *cellData=[CellData new];
+    NSIndexPath *indexPath=[[NSIndexPath alloc]initWithIndex:index];
+    CellData *cellData=[_fetchedResultsController objectAtIndexPath:indexPath];
     self.tableDictionary =[self.tableData objectAtIndex:index];
     [cellData initWithData:[self.tableDictionary objectForKey:@"title"] subTitile:[self.tableDictionary objectForKey:@"subtitle"] image:downloadImage ];
     [self.tableImages addObject:cellData];
+}
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
+    // The fetch controller is about to start sending change notifications, so prepare the table view for updates.
+    [self.myTableView beginUpdates];
+}
+
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
+    
+    UITableView *tableView = self.myTableView;
+    
+    switch(type) {
+            
+        case NSFetchedResultsChangeInsert:
+            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeUpdate:
+            //[self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+            break;
+            
+        case NSFetchedResultsChangeMove:
+            [tableView deleteRowsAtIndexPaths:[NSArray
+                                               arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [tableView insertRowsAtIndexPaths:[NSArray
+                                               arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+    }
+}
+
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id )sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
+    
+    switch(type) {
+            
+        case NSFetchedResultsChangeInsert:
+            [self.myTableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            [self.myTableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+    }
+}
+
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
+    // The fetch controller has sent all current change notifications, so tell the table view to process all updates.
+    [self.myTableView endUpdates];
 }
 -(void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error{
     if(error==nil){

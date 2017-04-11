@@ -137,22 +137,12 @@
 		01244E931E81763700E39CD5 /* sprint01 */ = {
 			isa = PBXGroup;
 			children = (
+				019134221E9D9519007E69F1 /* Delegates */,
+				019134211E9D94FB007E69F1 /* Model */,
 				01DAEFD41E92DB7700C94060 /* ViewControllers */,
-				01244ED51E81876300E39CD5 /* AppDelegate.h */,
-				01244ED61E81876300E39CD5 /* AppDelegate.m */,
-				01244ED71E81876300E39CD5 /* CustomTableCell.h */,
-				01244ED81E81876300E39CD5 /* CustomTableCell.m */,
-				01B5A3421E9C174400B3C98C /* CellData.h */,
-				01B5A3431E9C174400B3C98C /* CellData.m */,
-				01244ED91E81876300E39CD5 /* egg_benedict.jpg */,
-				01244EDA1E81876300E39CD5 /* full_breakfast.jpg */,
-				01244EDB1E81876300E39CD5 /* hamburger.jpg */,
-				01244EDC1E81876300E39CD5 /* mushroom_risotto.jpg */,
 				01A5BF721E81AE21002C26FF /* Main.storyboard */,
-				01244EDF1E81876400E39CD5 /* TableList.plist */,
 				01244EA51E81763800E39CD5 /* Images.xcassets */,
 				01244E941E81763800E39CD5 /* Supporting Files */,
-				0191341C1E9D88DA007E69F1 /* Model.xcdatamodeld */,
 			);
 			path = sprint01;
 			sourceTree = "<group>";
@@ -160,6 +150,11 @@
 		01244E941E81763800E39CD5 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				01244ED91E81876300E39CD5 /* egg_benedict.jpg */,
+				01244EDA1E81876300E39CD5 /* full_breakfast.jpg */,
+				01244EDB1E81876300E39CD5 /* hamburger.jpg */,
+				01244EDC1E81876300E39CD5 /* mushroom_risotto.jpg */,
+				01244EDF1E81876400E39CD5 /* TableList.plist */,
 				01244E951E81763800E39CD5 /* sprint01-Info.plist */,
 				01244E961E81763800E39CD5 /* InfoPlist.strings */,
 				01244E991E81763800E39CD5 /* main.m */,
@@ -184,6 +179,27 @@
 				01244EB51E81763A00E39CD5 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		019134211E9D94FB007E69F1 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				01244ED71E81876300E39CD5 /* CustomTableCell.h */,
+				01244ED81E81876300E39CD5 /* CustomTableCell.m */,
+				01B5A3421E9C174400B3C98C /* CellData.h */,
+				01B5A3431E9C174400B3C98C /* CellData.m */,
+				0191341C1E9D88DA007E69F1 /* Model.xcdatamodeld */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		019134221E9D9519007E69F1 /* Delegates */ = {
+			isa = PBXGroup;
+			children = (
+				01244ED51E81876300E39CD5 /* AppDelegate.h */,
+				01244ED61E81876300E39CD5 /* AppDelegate.m */,
+			);
+			name = Delegates;
 			sourceTree = "<group>";
 		};
 		01DAEFD41E92DB7700C94060 /* ViewControllers */ = {
