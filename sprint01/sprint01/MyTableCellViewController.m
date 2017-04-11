@@ -10,6 +10,7 @@
 #import "CustomTableCell.h"
 #import "MyTableViewController.h"
 @interface MyTableCellViewController ()
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
 
 @end
@@ -32,6 +33,7 @@
     self.titleLable.text=cell.titleLabel.text;
     self.subTitleLable.text=cell.subTitleLabel.text;
     self.cellImage.image=cell.cellImage.image;
+    //[self.scrollView addSubview:self.subTitleLable];
 }
 
 - (void)didReceiveMemoryWarning

@@ -9,6 +9,7 @@
 #import "MyTableViewController.h"
 #import "CustomTableCell.h"
 #import "MyTableCellViewController.h"
+#import "CellData.h"
 
 @interface MyTableViewController ()
 @property (weak, nonatomic) IBOutlet UIProgressView *progressView;
@@ -17,6 +18,7 @@
 @property (nonatomic) NSURLSession *session;
 @property (nonatomic) NSURLSessionDownloadTask *downloadTask;
 @property(nonatomic,strong) CustomTableCell *prototypeCell;
+@property(nonatomic) Boolean b;
 @end
 
 @implementation MyTableViewController
@@ -24,7 +26,7 @@
     [super viewDidLoad];
     self.session =[self backgroundSession];
     self.progressView.hidden =YES;
-    
+    self.b=false;
     // Do any additional setup after loading the view, typically from a nib.
 }
 
@@ -40,7 +42,7 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-     self.prototypeCell=[self.myTableView dequeueReusableCellWithIdentifier:myId];
+     self.prototypeCell=[[CustomTableCell alloc]init];
     [self configureCell:self.prototypeCell forRowAtIndexPath:indexPath];
     self.prototypeCell.bounds=CGRectMake(0, 0, CGRectGetWidth(self.myTableView.bounds), CGRectGetHeight(self.prototypeCell.bounds));
     [self.prototypeCell layoutIfNeeded];
@@ -52,21 +54,41 @@
 -(void)configureCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
     
     if([cell isKindOfClass:[CustomTableCell class]]){
-        CustomTableCell *textCell=(CustomTableCell *)cell;
-        self.tableDictionary =[self.tableData objectAtIndex:indexPath.row];
-        [textCell customCellData:self.tableDictionary];
+        if(self.tableImages.count==0&&self.b==false){
+             self.b=true;
+            for (int i=0; i<self.tableData.count; i++) {
+                self.tableDictionary =[self.tableData objectAtIndex:i];
+                 NSURL *url=[NSURL URLWithString:[self.tableDictionary objectForKey:@"image_name"]];
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),^(void){
+                    [self loadImage:url];
+                    });
+            }}else{
+                if(self.tableImages.count!=0){
+                CustomTableCell *textCell=(CustomTableCell *)cell;
+                self.tableDictionary =[self.tableData objectAtIndex:indexPath.row];
+                CellData *cellData=[CellData new];
+                    [cellData initWithData : [self.tableDictionary objectForKey:@"title"] subTitile:[self.tableDictionary objectForKey:@"subtitle"] image:[self.tableImages objectAtIndex:indexPath.row]];
+                    [textCell customCellData:cellData];
+                }
+            }
+     
+        }
 
     }
-}
 -(CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return UITableViewAutomaticDimension;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-
-    CustomTableCell *cell=(CustomTableCell *)[tableView dequeueReusableCellWithIdentifier:myId forIndexPath:indexPath];
-    self.tableDictionary =[self.tableData objectAtIndex:indexPath.row];
-    [cell customCellData:self.tableDictionary];
+CustomTableCell *cell=(CustomTableCell *)[tableView dequeueReusableCellWithIdentifier:myId forIndexPath:indexPath];
+    if(self.tableImages.count!=0){
     
+    CellData *cellData=[CellData new];
+    self.tableDictionary =[self.tableData objectAtIndex:indexPath.row];
+    
+        [cellData initWithData : [self.tableDictionary objectForKey:@"title"] subTitile:[self.tableDictionary objectForKey:@"subtitle"] image:[self.tableImages objectAtIndex:indexPath.row]];
+        [cell customCellData:cellData];
+    }
+
     return cell;
 }
 -(NSURLSession *)backgroundSession
@@ -81,7 +103,7 @@
 }
 -(void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didWriteData:(int64_t)bytesWritten totalBytesWritten:(int64_t)totalBytesWritten totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite{
     
-    if(downloadTask==self.downloadTask){
+    if(downloadTask.taskIdentifier==self.downloadTask.taskIdentifier){
         double progress=(double)totalBytesWritten/(double)totalBytesExpectedToWrite;
         NSLog(@"DownloadTask:%@ progress: %lf",downloadTask,progress);
         dispatch_async(dispatch_get_main_queue(),^{
@@ -101,19 +123,39 @@
     [fileManager removeItemAtURL:destinationURL error:NULL];
     BOOL success=[fileManager copyItemAtURL:downloadURL toURL:destinationURL error:&errorCopy];
     if(success){
-        self.progressView.hidden=YES;
+        
         dispatch_async(dispatch_get_main_queue(), ^{
             NSData *data=[NSData dataWithContentsOfFile:[destinationURL path]];
             NSDictionary *json=[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
             self.tableData=[json valueForKey:@"array"];
+            
             [self.myTableView reloadData];
-                        
+               self.progressView.hidden=YES;         
         });
+            
+            
+       
         
     }
     else{
         NSLog(@"Error during the copy: %@",[errorCopy localizedDescription]);
     }
+}
+-(void)loadImage:(NSURL *)url{
+    
+        
+    
+            NSURLSessionDownloadTask *downloadPhotoTask=[[NSURLSession sharedSession]downloadTaskWithURL:url completionHandler:^(NSURL *location,NSURLResponse *response,NSError *error){
+                UIImage *downloadImage=[UIImage imageWithData:[NSData dataWithContentsOfURL:location]];
+                //cellData.cellImage.image=downloadImage;
+                [self.tableImages addObject:downloadImage];
+                if(self.tableImages.count==self.tableData.count){
+                    [self.myTableView reloadData];
+                }
+                
+            }];
+            [downloadPhotoTask resume];
+    
 }
 -(void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error{
     if(error==nil){
@@ -158,11 +200,12 @@
         return;
     }
     NSURL *downloadURL=[NSURL URLWithString:@"https://api.backendless.com/4B1822F6-55B7-B39A-FF0C-655867D71F00/v1/files/document.json"];
-   
+    self.tableImages=[NSMutableArray new];
     NSURLRequest *request= [NSURLRequest requestWithURL:downloadURL];
     self.downloadTask=[self.session downloadTaskWithRequest:request];
     [self.downloadTask resume];
     self.progressView.hidden=NO;
+    
     
    
     

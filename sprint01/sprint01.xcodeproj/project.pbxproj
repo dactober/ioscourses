@@ -27,6 +27,7 @@
 		01244EE61E81876400E39CD5 /* MyTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01244EDE1E81876300E39CD5 /* MyTableViewController.m */; };
 		01244EE71E81876400E39CD5 /* TableList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 01244EDF1E81876400E39CD5 /* TableList.plist */; };
 		01A5BF731E81AE21002C26FF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 01A5BF721E81AE21002C26FF /* Main.storyboard */; };
+		01B5A3441E9C174400B3C98C /* CellData.m in Sources */ = {isa = PBXBuildFile; fileRef = 01B5A3431E9C174400B3C98C /* CellData.m */; };
 		01DAEFD31E92DB6300C94060 /* MyTableCellViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01DAEFD21E92DB6300C94060 /* MyTableCellViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -67,6 +68,8 @@
 		01244EDE1E81876300E39CD5 /* MyTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTableViewController.m; sourceTree = "<group>"; };
 		01244EDF1E81876400E39CD5 /* TableList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TableList.plist; sourceTree = "<group>"; };
 		01A5BF721E81AE21002C26FF /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		01B5A3421E9C174400B3C98C /* CellData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellData.h; sourceTree = "<group>"; };
+		01B5A3431E9C174400B3C98C /* CellData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CellData.m; sourceTree = "<group>"; };
 		01DAEFD11E92DB6300C94060 /* MyTableCellViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTableCellViewController.h; sourceTree = "<group>"; };
 		01DAEFD21E92DB6300C94060 /* MyTableCellViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTableCellViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -133,6 +136,8 @@
 				01244ED61E81876300E39CD5 /* AppDelegate.m */,
 				01244ED71E81876300E39CD5 /* CustomTableCell.h */,
 				01244ED81E81876300E39CD5 /* CustomTableCell.m */,
+				01B5A3421E9C174400B3C98C /* CellData.h */,
+				01B5A3431E9C174400B3C98C /* CellData.m */,
 				01244ED91E81876300E39CD5 /* egg_benedict.jpg */,
 				01244EDA1E81876300E39CD5 /* full_breakfast.jpg */,
 				01244EDB1E81876300E39CD5 /* hamburger.jpg */,
@@ -288,6 +293,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				01244EE01E81876400E39CD5 /* AppDelegate.m in Sources */,
+				01B5A3441E9C174400B3C98C /* CellData.m in Sources */,
 				01244E9A1E81763800E39CD5 /* main.m in Sources */,
 				01244EE11E81876400E39CD5 /* CustomTableCell.m in Sources */,
 				01244EE61E81876400E39CD5 /* MyTableViewController.m in Sources */,

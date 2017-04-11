@@ -146,12 +146,9 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="240" translatesAutoresizingMaskIntoConstraints="NO" id="Dco-e6-NCT">
-                                <rect key="frame" x="45" y="248" width="240" height="15"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="240" translatesAutoresizingMaskIntoConstraints="NO" id="Dco-e6-NCT">
+                                <rect key="frame" x="40" y="277" width="240" height="15"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="240" id="TyN-b3-mDG"/>
-                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -169,13 +166,12 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="IOf-A2-Mq5" secondAttribute="trailing" constant="35" id="5ke-gj-njX"/>
-                            <constraint firstAttribute="trailing" secondItem="U8i-tP-tir" secondAttribute="trailing" constant="35" id="ANT-NC-j4E"/>
                             <constraint firstItem="IOf-A2-Mq5" firstAttribute="top" secondItem="drk-lF-3pA" secondAttribute="bottom" constant="19" id="HPR-hE-RgH"/>
-                            <constraint firstItem="Dco-e6-NCT" firstAttribute="leading" secondItem="pvL-kh-lxf" secondAttribute="leading" constant="45" id="LRh-vG-KQi"/>
-                            <constraint firstAttribute="trailing" secondItem="Dco-e6-NCT" secondAttribute="trailing" constant="35" id="NRT-sL-uKu"/>
                             <constraint firstItem="U8i-tP-tir" firstAttribute="top" secondItem="IOf-A2-Mq5" secondAttribute="bottom" constant="8" id="Zym-z2-lJc"/>
-                            <constraint firstItem="Dco-e6-NCT" firstAttribute="top" secondItem="U8i-tP-tir" secondAttribute="bottom" constant="8" id="csM-cj-p8E"/>
+                            <constraint firstAttribute="trailing" secondItem="Dco-e6-NCT" secondAttribute="trailing" constant="40" id="cnL-XS-QdA"/>
+                            <constraint firstItem="Dco-e6-NCT" firstAttribute="leading" secondItem="pvL-kh-lxf" secondAttribute="leading" constant="40" id="ieT-V8-qlW"/>
                             <constraint firstItem="U8i-tP-tir" firstAttribute="leading" secondItem="pvL-kh-lxf" secondAttribute="leading" constant="45" id="jrO-py-1sK"/>
+                            <constraint firstItem="Dco-e6-NCT" firstAttribute="top" secondItem="U8i-tP-tir" secondAttribute="bottom" constant="37" id="loF-LZ-wYL"/>
                             <constraint firstItem="IOf-A2-Mq5" firstAttribute="leading" secondItem="pvL-kh-lxf" secondAttribute="leading" constant="45" id="ykX-La-3BY"/>
                         </constraints>
                     </view>
