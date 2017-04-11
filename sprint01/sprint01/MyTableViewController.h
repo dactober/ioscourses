@@ -14,6 +14,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *myTableView;
 @property(nonatomic,retain) NSFetchedResultsController *fetchedResultsController;
 @property(nonatomic,strong) NSManagedObjectContext *managedObjectContext;
+@property(nonatomic,strong) NSMutableArray *tableImages;
 @end
 static NSString *myId=@"MyId";
 

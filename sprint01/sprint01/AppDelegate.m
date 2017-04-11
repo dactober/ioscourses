@@ -12,11 +12,10 @@
 
 @end
 @implementation AppDelegate
-@synthesize navigationController;
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-   navigationController =[[UINavigationController alloc]init
-                          ];
+   
     return YES;
 }
 -(void)application:(UIApplication *)application handleEventsForBackgroundURLSession:(NSString *)identifier completionHandler:(void (^)())completionHandler{

@@ -7,15 +7,14 @@
 //
 
 #import "MyTableCellViewController.h"
-#import "CustomTableCell.h"
-#import "MyTableViewController.h"
 @interface MyTableCellViewController ()
+
 
 
 @end
 
 @implementation MyTableCellViewController
-@synthesize cell;
+@synthesize cellData;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -29,9 +28,9 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.titleLable.text=cell.titleLabel.text;
-    self.subTitleLable.text=cell.subTitleLabel.text;
-    self.cellImage.image=cell.cellImage.image;
+    self.titleLable.text=cellData.titleLabel;
+    self.subTitleLable.text=cellData.subTitleLabel;
+    self.cellImage.image=cellData.cellImage;
 }
 
 - (void)didReceiveMemoryWarning
