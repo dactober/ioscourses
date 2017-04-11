@@ -26,6 +26,8 @@
 		01244EE51E81876400E39CD5 /* mushroom_risotto.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 01244EDC1E81876300E39CD5 /* mushroom_risotto.jpg */; };
 		01244EE61E81876400E39CD5 /* MyTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01244EDE1E81876300E39CD5 /* MyTableViewController.m */; };
 		01244EE71E81876400E39CD5 /* TableList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 01244EDF1E81876400E39CD5 /* TableList.plist */; };
+		0191341E1E9D88DA007E69F1 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0191341C1E9D88DA007E69F1 /* Model.xcdatamodeld */; };
+		019134201E9D8B00007E69F1 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0191341F1E9D8B00007E69F1 /* CoreData.framework */; };
 		01A5BF731E81AE21002C26FF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 01A5BF721E81AE21002C26FF /* Main.storyboard */; };
 		01DAEFD31E92DB6300C94060 /* MyTableCellViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01DAEFD21E92DB6300C94060 /* MyTableCellViewController.m */; };
 /* End PBXBuildFile section */
@@ -66,6 +68,8 @@
 		01244EDD1E81876300E39CD5 /* MyTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTableViewController.h; sourceTree = "<group>"; };
 		01244EDE1E81876300E39CD5 /* MyTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTableViewController.m; sourceTree = "<group>"; };
 		01244EDF1E81876400E39CD5 /* TableList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TableList.plist; sourceTree = "<group>"; };
+		0191341D1E9D88DA007E69F1 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		0191341F1E9D8B00007E69F1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		01A5BF721E81AE21002C26FF /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		01DAEFD11E92DB6300C94060 /* MyTableCellViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTableCellViewController.h; sourceTree = "<group>"; };
 		01DAEFD21E92DB6300C94060 /* MyTableCellViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTableCellViewController.m; sourceTree = "<group>"; };
@@ -76,6 +80,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				019134201E9D8B00007E69F1 /* CoreData.framework in Frameworks */,
 				01244E901E81763700E39CD5 /* CoreGraphics.framework in Frameworks */,
 				01244E921E81763700E39CD5 /* UIKit.framework in Frameworks */,
 				01244E8E1E81763700E39CD5 /* Foundation.framework in Frameworks */,
@@ -117,6 +122,7 @@
 		01244E8C1E81763700E39CD5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0191341F1E9D8B00007E69F1 /* CoreData.framework */,
 				01244E8D1E81763700E39CD5 /* Foundation.framework */,
 				01244E8F1E81763700E39CD5 /* CoreGraphics.framework */,
 				01244E911E81763700E39CD5 /* UIKit.framework */,
@@ -141,6 +147,7 @@
 				01244EDF1E81876400E39CD5 /* TableList.plist */,
 				01244EA51E81763800E39CD5 /* Images.xcassets */,
 				01244E941E81763800E39CD5 /* Supporting Files */,
+				0191341C1E9D88DA007E69F1 /* Model.xcdatamodeld */,
 			);
 			path = sprint01;
 			sourceTree = "<group>";
@@ -292,6 +299,7 @@
 				01244EE11E81876400E39CD5 /* CustomTableCell.m in Sources */,
 				01244EE61E81876400E39CD5 /* MyTableViewController.m in Sources */,
 				01DAEFD31E92DB6300C94060 /* MyTableCellViewController.m in Sources */,
+				0191341E1E9D88DA007E69F1 /* Model.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -502,6 +510,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		0191341C1E9D88DA007E69F1 /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				0191341D1E9D88DA007E69F1 /* Model.xcdatamodel */,
+			);
+			currentVersion = 0191341D1E9D88DA007E69F1 /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 01244E821E81763600E39CD5 /* Project object */;
 }

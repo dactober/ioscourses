@@ -20,12 +20,34 @@
 @end
 
 @implementation MyTableViewController
+@synthesize fetchedResultsController=_fetchedResultsController;
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.session =[self backgroundSession];
     self.progressView.hidden =YES;
+    NSError *error;
+    if(![[self fetchedResultsController]performFetch:&error]){
+        NSLog(@"Unresolver error %@, %@",error,[error userInfo]);
+        exit(-1);
+    }
     
     // Do any additional setup after loading the view, typically from a nib.
+}
+-(NSFetchedResultsController *)fetchedResultsController{
+    if(_fetchedResultsController!=nil){
+        return _fetchedResultsController;
+    }
+    NSFetchRequest *fetchRequest=[[NSFetchRequest alloc]init];
+    NSEntityDescription *entity=[NSEntityDescription entityForName:@"Food" inManagedObjectContext:_managedObjectContext];
+    [fetchRequest setEntity:entity];
+    
+    NSSortDescriptor *sort=[[NSSortDescriptor alloc]initWithKey:@"details.time" ascending:NO];
+    [fetchRequest setSortDescriptors:[NSArray arrayWithObject:sort]];
+    [fetchRequest setFetchBatchSize:20];
+    NSFetchedResultsController *theFetchedResultsController=[[NSFetchedResultsController alloc]initWithFetchRequest:fetchRequest managedObjectContext:_managedObjectContext sectionNameKeyPath:nil cacheName:@"Root"];
+    self.fetchedResultsController=theFetchedResultsController;
+    _fetchedResultsController.delegate=self;
+    return _fetchedResultsController;
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -35,8 +57,9 @@
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    
-    return [self.tableData count];
+    id sectionInfo=[[_fetchedResultsController sections]objectAtIndex:section];
+    return [sectionInfo numberOfObjects];
+    //return [self.tableData count];
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
@@ -52,6 +75,7 @@
 -(void)configureCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
     
     if([cell isKindOfClass:[CustomTableCell class]]){
+        
         CustomTableCell *textCell=(CustomTableCell *)cell;
         self.tableDictionary =[self.tableData objectAtIndex:indexPath.row];
         [textCell customCellData:self.tableDictionary];
