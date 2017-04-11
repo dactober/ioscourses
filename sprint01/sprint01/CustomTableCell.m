@@ -12,13 +12,11 @@
 
 
 -(void)customCellData:(CellData *)cellData{
-    ////self.titleLabel.hidden=YES;
-    //self.subTitleLabel.hidden=YES;
-    self.titleLabel=cellData.titleLabel;
-    self.subTitleLabel=cellData.subTitleLabel;
-    self.cellImage=cellData.cellImage;
-                //self.titleLabel.hidden=NO;
-                //self.subTitleLabel.hidden=NO;
+   
+    self.titleLabel.text=cellData.titleLabel;
+    self.subTitleLabel.text=cellData.subTitleLabel;
+    self.cellImage.image=cellData.cellImage;
+               
 }
 
 -(void)layoutSubviews{

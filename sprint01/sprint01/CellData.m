@@ -9,10 +9,10 @@
 #import "CellData.h"
 
 @implementation CellData
--(void)initWithData :(UILabel *)title subTitile:(UILabel *)subTitle image:(UIImage *)image{
+-(void)initWithData :(NSString *)title subTitile:(NSString *)subTitle image:(UIImage *)image{
     self.titleLabel=title;
     self.subTitleLabel=subTitle;
-    self.cellImage=[[UIImageView alloc]initWithImage:image ];
+    self.cellImage=image;
 }
 
 

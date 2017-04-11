@@ -42,7 +42,7 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-     self.prototypeCell=[[CustomTableCell alloc]init];
+     self.prototypeCell=[self.myTableView dequeueReusableCellWithIdentifier:myId];
     [self configureCell:self.prototypeCell forRowAtIndexPath:indexPath];
     self.prototypeCell.bounds=CGRectMake(0, 0, CGRectGetWidth(self.myTableView.bounds), CGRectGetHeight(self.prototypeCell.bounds));
     [self.prototypeCell layoutIfNeeded];
@@ -54,40 +54,22 @@
 -(void)configureCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
     
     if([cell isKindOfClass:[CustomTableCell class]]){
-        if(self.tableImages.count==0&&self.b==false){
-             self.b=true;
-            for (int i=0; i<self.tableData.count; i++) {
-                self.tableDictionary =[self.tableData objectAtIndex:i];
-                 NSURL *url=[NSURL URLWithString:[self.tableDictionary objectForKey:@"image_name"]];
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),^(void){
-                    [self loadImage:url];
-                    });
-            }}else{
-                if(self.tableImages.count!=0){
+        
                 CustomTableCell *textCell=(CustomTableCell *)cell;
                 self.tableDictionary =[self.tableData objectAtIndex:indexPath.row];
-                CellData *cellData=[CellData new];
-                    [cellData initWithData : [self.tableDictionary objectForKey:@"title"] subTitile:[self.tableDictionary objectForKey:@"subtitle"] image:[self.tableImages objectAtIndex:indexPath.row]];
-                    [textCell customCellData:cellData];
+                    [textCell customCellData:[self.tableImages objectAtIndex:indexPath.row]];
                 }
-            }
+    
      
         }
-
-    }
 -(CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return UITableViewAutomaticDimension;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
 CustomTableCell *cell=(CustomTableCell *)[tableView dequeueReusableCellWithIdentifier:myId forIndexPath:indexPath];
-    if(self.tableImages.count!=0){
-    
-    CellData *cellData=[CellData new];
-    self.tableDictionary =[self.tableData objectAtIndex:indexPath.row];
-    
-        [cellData initWithData : [self.tableDictionary objectForKey:@"title"] subTitile:[self.tableDictionary objectForKey:@"subtitle"] image:[self.tableImages objectAtIndex:indexPath.row]];
-        [cell customCellData:cellData];
-    }
+           self.tableDictionary =[self.tableData objectAtIndex:indexPath.row];
+        [cell customCellData:[self.tableImages objectAtIndex:indexPath.row]];
+   
 
     return cell;
 }
@@ -124,38 +106,43 @@ CustomTableCell *cell=(CustomTableCell *)[tableView dequeueReusableCellWithIdent
     BOOL success=[fileManager copyItemAtURL:downloadURL toURL:destinationURL error:&errorCopy];
     if(success){
         
-        dispatch_async(dispatch_get_main_queue(), ^{
+        
             NSData *data=[NSData dataWithContentsOfFile:[destinationURL path]];
             NSDictionary *json=[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
             self.tableData=[json valueForKey:@"array"];
-            
-            [self.myTableView reloadData];
-               self.progressView.hidden=YES;         
-        });
-            
-            
-       
+        
+            for (int i=0; i<self.tableData.count; i++) {
+                self.tableDictionary =[self.tableData objectAtIndex:i];
+                NSURL *url=[NSURL URLWithString:[self.tableDictionary objectForKey:@"image_name"]];
+                    [self loadImage:url index:i];
+               }
         
     }
     else{
         NSLog(@"Error during the copy: %@",[errorCopy localizedDescription]);
     }
 }
--(void)loadImage:(NSURL *)url{
-    
-        
-    
+-(void)loadImage:(NSURL *)url index:(int)index{
             NSURLSessionDownloadTask *downloadPhotoTask=[[NSURLSession sharedSession]downloadTaskWithURL:url completionHandler:^(NSURL *location,NSURLResponse *response,NSError *error){
                 UIImage *downloadImage=[UIImage imageWithData:[NSData dataWithContentsOfURL:location]];
-                //cellData.cellImage.image=downloadImage;
-                [self.tableImages addObject:downloadImage];
+                [self createCellData:index image:downloadImage];
                 if(self.tableImages.count==self.tableData.count){
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        self.progressView.hidden=YES;
                     [self.myTableView reloadData];
+                        });
                 }
                 
             }];
             [downloadPhotoTask resume];
     
+}
+-(void)createCellData:(int)index image:(UIImage *)downloadImage{
+    CellData *cellData=[CellData new];
+    self.tableDictionary =[self.tableData objectAtIndex:index];
+    [cellData initWithData:[self.tableDictionary objectForKey:@"title"] subTitile:[self.tableDictionary objectForKey:@"subtitle"] image:downloadImage ];
+    [self.tableImages addObject:cellData];
 }
 -(void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error{
     if(error==nil){
@@ -188,13 +175,18 @@ CustomTableCell *cell=(CustomTableCell *)[tableView dequeueReusableCellWithIdent
         
         NSIndexPath *indexPath =[self.myTableView indexPathForSelectedRow];
         MyTableCellViewController *cellView=(MyTableCellViewController *)segue.destinationViewController;
-        CustomTableCell *cell=(CustomTableCell *)[self.myTableView cellForRowAtIndexPath:indexPath];
-        cellView.cell=cell;
+       
+        cellView.cellData=[self.tableImages objectAtIndex:indexPath.row];
         
         
     }
 }
 - (IBAction)loadData:(id)sender {
+    
+    [self download];
+}
+
+-(void)download{
     if(self.downloadTask)
     {
         return;
@@ -205,11 +197,5 @@ CustomTableCell *cell=(CustomTableCell *)[tableView dequeueReusableCellWithIdent
     self.downloadTask=[self.session downloadTaskWithRequest:request];
     [self.downloadTask resume];
     self.progressView.hidden=NO;
-    
-    
-   
-    
-    
-    
 }
 @end
