@@ -9,5 +9,8 @@
 #import <Foundation/Foundation.h>
 
 @interface CellData : NSObject
-
+@property (nonatomic,strong) UILabel *titleLabel;
+@property (nonatomic,strong) UILabel *subTitleLabel;
+@property (nonatomic,strong)  UIImageView *cellImage;
+-(void)initWithData :(UILabel *)title subTitile:(UILabel *)subTitle image:(UIImage *)image;
 @end
