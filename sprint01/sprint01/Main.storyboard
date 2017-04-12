@@ -163,25 +163,24 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="U8i-tP-tir">
-                                <rect key="frame" x="45" y="112" width="240" height="128"/>
+                                <rect key="frame" x="40" y="112" width="240" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="240" id="NFo-S6-bjf"/>
-                                    <constraint firstAttribute="height" constant="128" id="sRE-dL-Ku5"/>
+                                    <constraint firstAttribute="height" constant="128" id="6Kl-Vf-8wl"/>
+                                    <constraint firstAttribute="width" constant="240" id="ftu-uc-Kra"/>
                                 </constraints>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="U8i-tP-tir" firstAttribute="leading" secondItem="pvL-kh-lxf" secondAttribute="leading" constant="45" id="3De-AT-glc"/>
-                            <constraint firstAttribute="trailing" secondItem="IOf-A2-Mq5" secondAttribute="trailing" constant="35" id="5ke-gj-njX"/>
-                            <constraint firstAttribute="trailing" secondItem="Dco-e6-NCT" secondAttribute="trailing" constant="40" id="ATh-gi-rHu"/>
-                            <constraint firstAttribute="trailing" secondItem="U8i-tP-tir" secondAttribute="trailing" constant="35" id="GEO-MW-rbe"/>
-                            <constraint firstItem="IOf-A2-Mq5" firstAttribute="top" secondItem="drk-lF-3pA" secondAttribute="bottom" constant="19" id="HPR-hE-RgH"/>
-                            <constraint firstItem="Dco-e6-NCT" firstAttribute="top" secondItem="U8i-tP-tir" secondAttribute="bottom" constant="8" id="OHX-9v-uFo"/>
-                            <constraint firstItem="Dco-e6-NCT" firstAttribute="leading" secondItem="pvL-kh-lxf" secondAttribute="leading" constant="40" id="UdJ-51-Iwu"/>
-                            <constraint firstItem="U8i-tP-tir" firstAttribute="top" secondItem="IOf-A2-Mq5" secondAttribute="bottom" constant="8" id="bRp-Bn-Q5X"/>
-                            <constraint firstItem="IOf-A2-Mq5" firstAttribute="leading" secondItem="pvL-kh-lxf" secondAttribute="leading" constant="45" id="ykX-La-3BY"/>
+                            <constraint firstItem="Dco-e6-NCT" firstAttribute="top" secondItem="U8i-tP-tir" secondAttribute="bottom" constant="8" id="2Kb-lp-Ar4"/>
+                            <constraint firstItem="IOf-A2-Mq5" firstAttribute="leading" secondItem="pvL-kh-lxf" secondAttribute="leading" constant="45" id="2i6-AV-Olm"/>
+                            <constraint firstItem="IOf-A2-Mq5" firstAttribute="top" secondItem="drk-lF-3pA" secondAttribute="bottom" constant="19" id="8ZG-PM-emx"/>
+                            <constraint firstAttribute="trailing" secondItem="IOf-A2-Mq5" secondAttribute="trailing" constant="35" id="LXk-QO-dn1"/>
+                            <constraint firstAttribute="trailing" secondItem="Dco-e6-NCT" secondAttribute="trailing" constant="40" id="P0J-M0-4Wl"/>
+                            <constraint firstAttribute="centerX" secondItem="U8i-tP-tir" secondAttribute="centerX" id="Sp4-dO-2OT"/>
+                            <constraint firstItem="U8i-tP-tir" firstAttribute="top" secondItem="IOf-A2-Mq5" secondAttribute="bottom" constant="8" id="eef-e6-exL"/>
+                            <constraint firstItem="Dco-e6-NCT" firstAttribute="leading" secondItem="pvL-kh-lxf" secondAttribute="leading" constant="40" id="lME-JE-eIJ"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="nhQ-HW-gw3"/>

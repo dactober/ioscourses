@@ -29,29 +29,30 @@
     self.session =[self backgroundSession];
     self.progressView.hidden =YES;
    // self.fetchedResultsController=nil;
-    NSError *error;
-    if(![[self fetchedResultsController]performFetch:&error]){
-        NSLog(@"Unresolver error %@, %@",error,[error userInfo]);
-        exit(-1);
-    }
+//    NSError *error;
+//    if(![[self fetchedResultsController]performFetch:&error]){
+//        NSLog(@"Unresolver error %@, %@",error,[error userInfo]);
+//        exit(-1);
+//    }
     // Do any additional setup after loading the view, typically from a nib.
 }
--(NSFetchedResultsController *)fetchedResultsController{
-    if(_fetchedResultsController!=nil){
-        return _fetchedResultsController;
-    }
-    NSFetchRequest *fetchRequest=[[NSFetchRequest alloc]init];
-    NSEntityDescription *entity=[NSEntityDescription entityForName:@"CellData" inManagedObjectContext:managedObjectContext];
-    [fetchRequest setEntity:entity];
-    
-    NSSortDescriptor *sort=[[NSSortDescriptor alloc]initWithKey:@"title" ascending:NO];
-    [fetchRequest setSortDescriptors:[NSArray arrayWithObject:sort]];
-    [fetchRequest setFetchBatchSize:20];
-    NSFetchedResultsController *theFetchedResultsController=[[NSFetchedResultsController alloc]initWithFetchRequest:fetchRequest managedObjectContext:managedObjectContext sectionNameKeyPath:nil cacheName:@"Root"];
-    self.fetchedResultsController=theFetchedResultsController;
-    _fetchedResultsController.delegate=self;
-    return _fetchedResultsController;
-}
+
+//-(NSFetchedResultsController *)fetchedResultsController{
+//    if(_fetchedResultsController!=nil){
+//        return _fetchedResultsController;
+//    }
+//    NSFetchRequest *fetchRequest=[[NSFetchRequest alloc]init];
+//    NSEntityDescription *entity=[NSEntityDescription entityForName:@"CellData" inManagedObjectContext:managedObjectContext];
+//    [fetchRequest setEntity:entity];
+//    
+//    NSSortDescriptor *sort=[[NSSortDescriptor alloc]initWithKey:@"titleLabel" ascending:NO];
+//    [fetchRequest setSortDescriptors:[NSArray arrayWithObject:sort]];
+//    [fetchRequest setFetchBatchSize:20];
+//    NSFetchedResultsController *theFetchedResultsController=[[NSFetchedResultsController alloc]initWithFetchRequest:fetchRequest managedObjectContext:managedObjectContext sectionNameKeyPath:nil cacheName:@"Root"];
+//    self.fetchedResultsController=theFetchedResultsController;
+//    _fetchedResultsController.delegate=self;
+//    return _fetchedResultsController;
+//}
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     
@@ -60,9 +61,9 @@
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-   id sectionInfo=[[_fetchedResultsController sections]objectAtIndex:section];
-    return [sectionInfo numberOfObjects];
-   // return [self.tableData count];
+   //id sectionInfo=[[_fetchedResultsController sections]objectAtIndex:section];
+    //return [sectionInfo numberOfObjects];
+    return [self.tableData count];
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
@@ -81,7 +82,7 @@
 
                 CustomTableCell *textCell=(CustomTableCell *)cell;
                 self.tableDictionary =[self.tableData objectAtIndex:indexPath.row];
-                [textCell customCellData:[self.tableImages objectAtIndex:indexPath.row]];
+                [textCell customCellData:[self.cellArray objectAtIndex:indexPath.row]];
     }
         }
 -(CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -90,7 +91,7 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
 CustomTableCell *cell=(CustomTableCell *)[tableView dequeueReusableCellWithIdentifier:myId forIndexPath:indexPath];
            self.tableDictionary =[self.tableData objectAtIndex:indexPath.row];
-        [cell customCellData:[self.tableImages objectAtIndex:indexPath.row]];
+        [cell customCellData:[self.cellArray objectAtIndex:indexPath.row]];
    
 
     return cell;
@@ -148,7 +149,7 @@ CustomTableCell *cell=(CustomTableCell *)[tableView dequeueReusableCellWithIdent
             NSURLSessionDownloadTask *downloadPhotoTask=[[NSURLSession sharedSession]downloadTaskWithURL:url completionHandler:^(NSURL *location,NSURLResponse *response,NSError *error){
                 UIImage *downloadImage=[UIImage imageWithData:[NSData dataWithContentsOfURL:location]];
                 [self createCellData:index image:downloadImage];
-                if(self.tableImages.count==self.tableData.count){
+                if(self.cellArray.count==self.tableData.count){
                     
                     dispatch_async(dispatch_get_main_queue(), ^{
                         self.progressView.hidden=YES;
@@ -161,65 +162,66 @@ CustomTableCell *cell=(CustomTableCell *)[tableView dequeueReusableCellWithIdent
     
 }
 -(void)createCellData:(int)index image:(UIImage *)downloadImage{
-    NSIndexPath *indexPath=[[NSIndexPath alloc]initWithIndex:index];
-    CellData *cellData=[_fetchedResultsController objectAtIndexPath:indexPath];
+    //NSIndexPath *indexPath=[[NSIndexPath alloc]initWithIndex:index];
+   // CellData *cellData=[_fetchedResultsController objectAtIndexPath:indexPath];
+    CellData *cellData=[CellData new];
     self.tableDictionary =[self.tableData objectAtIndex:index];
     [cellData initWithData:[self.tableDictionary objectForKey:@"title"] subTitile:[self.tableDictionary objectForKey:@"subtitle"] image:downloadImage ];
-    [self.tableImages addObject:cellData];
+    [self.cellArray addObject:cellData];
 }
-- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
-    // The fetch controller is about to start sending change notifications, so prepare the table view for updates.
-    [self.myTableView beginUpdates];
-}
-
-
-- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
-    
-    UITableView *tableView = self.myTableView;
-    
-    switch(type) {
-            
-        case NSFetchedResultsChangeInsert:
-            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-            
-        case NSFetchedResultsChangeDelete:
-            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-            
-        case NSFetchedResultsChangeUpdate:
-            //[self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
-            break;
-            
-        case NSFetchedResultsChangeMove:
-            [tableView deleteRowsAtIndexPaths:[NSArray
-                                               arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            [tableView insertRowsAtIndexPaths:[NSArray
-                                               arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-    }
-}
-
-
-- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id )sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
-    
-    switch(type) {
-            
-        case NSFetchedResultsChangeInsert:
-            [self.myTableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-            
-        case NSFetchedResultsChangeDelete:
-            [self.myTableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-    }
-}
-
-
-- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
-    // The fetch controller has sent all current change notifications, so tell the table view to process all updates.
-    [self.myTableView endUpdates];
-}
+//- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
+//    // The fetch controller is about to start sending change notifications, so prepare the table view for updates.
+//    [self.myTableView beginUpdates];
+//}
+//
+//
+//- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
+//    
+//    UITableView *tableView = self.myTableView;
+//    
+//    switch(type) {
+//            
+//        case NSFetchedResultsChangeInsert:
+//            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+//            break;
+//            
+//        case NSFetchedResultsChangeDelete:
+//            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+//            break;
+//            
+//        case NSFetchedResultsChangeUpdate:
+//            //[self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+//            break;
+//            
+//        case NSFetchedResultsChangeMove:
+//            [tableView deleteRowsAtIndexPaths:[NSArray
+//                                               arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+//            [tableView insertRowsAtIndexPaths:[NSArray
+//                                               arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+//            break;
+//    }
+//}
+//
+//
+//- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id )sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
+//    
+//    switch(type) {
+//            
+//        case NSFetchedResultsChangeInsert:
+//            [self.myTableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+//            break;
+//            
+//        case NSFetchedResultsChangeDelete:
+//            [self.myTableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+//            break;
+//    }
+//}
+//
+//
+//- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
+//    // The fetch controller has sent all current change notifications, so tell the table view to process all updates.
+//    [self.myTableView endUpdates];
+//}
 -(void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error{
     if(error==nil){
         NSLog(@"Task: %@ completed successfully",task);
@@ -252,7 +254,7 @@ CustomTableCell *cell=(CustomTableCell *)[tableView dequeueReusableCellWithIdent
         NSIndexPath *indexPath =[self.myTableView indexPathForSelectedRow];
         MyTableCellViewController *cellView=(MyTableCellViewController *)segue.destinationViewController;
        
-        cellView.cellData=[self.tableImages objectAtIndex:indexPath.row];
+        cellView.cellData=[self.cellArray objectAtIndex:indexPath.row];
         
         
     }
@@ -268,7 +270,7 @@ CustomTableCell *cell=(CustomTableCell *)[tableView dequeueReusableCellWithIdent
         return;
     }
     NSURL *downloadURL=[NSURL URLWithString:@"https://api.backendless.com/4B1822F6-55B7-B39A-FF0C-655867D71F00/v1/files/document.json"];
-    self.tableImages=[NSMutableArray new];
+    self.cellArray=[NSMutableArray new];
     NSURLRequest *request= [NSURLRequest requestWithURL:downloadURL];
     self.downloadTask=[self.session downloadTaskWithRequest:request];
     [self.downloadTask resume];

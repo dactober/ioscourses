@@ -4,8 +4,9 @@
         <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="subtitle" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="relationship" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CellData" inverseName="relationship" inverseEntity="CellData" syncable="YES"/>
     </entity>
     <elements>
-        <element name="CellData" positionX="-63" positionY="-18" width="128" height="90"/>
+        <element name="CellData" positionX="-63" positionY="-18" width="128" height="105"/>
     </elements>
 </model>

@@ -16,7 +16,7 @@
     self.titleLabel.text=cellData.titleLabel;
     self.subTitleLabel.text=cellData.subTitleLabel;
     self.cellImage.image=cellData.cellImage;
-               
+    
 }
 
 -(void)layoutSubviews{

@@ -10,12 +10,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "sprint01/MyTableViewController.m"
-            timestampString = "513645493.00896"
+            timestampString = "513686995.589558"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "43"
-            endingLineNumber = "43"
-            landmarkName = "-fetchedResultsController"
+            startingLineNumber = "151"
+            endingLineNumber = "151"
+            landmarkName = "-loadImage:index:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -26,12 +26,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "sprint01/MyTableViewController.m"
-            timestampString = "513645493.00896"
+            timestampString = "513689526.133501"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "44"
-            endingLineNumber = "44"
-            landmarkName = "-fetchedResultsController"
+            startingLineNumber = "165"
+            endingLineNumber = "165"
+            landmarkName = "-createCellData:image:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -42,12 +42,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "sprint01/MyTableViewController.m"
-            timestampString = "513645493.00896"
+            timestampString = "513689526.133501"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "45"
-            endingLineNumber = "45"
-            landmarkName = "-fetchedResultsController"
+            startingLineNumber = "167"
+            endingLineNumber = "167"
+            landmarkName = "-createCellData:image:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -58,12 +58,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "sprint01/MyTableViewController.m"
-            timestampString = "513645493.00896"
+            timestampString = "513689526.133501"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "47"
-            endingLineNumber = "47"
-            landmarkName = "-fetchedResultsController"
+            startingLineNumber = "168"
+            endingLineNumber = "168"
+            landmarkName = "-createCellData:image:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -74,12 +74,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "sprint01/MyTableViewController.m"
-            timestampString = "513645493.00896"
+            timestampString = "513689526.133501"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "48"
-            endingLineNumber = "48"
-            landmarkName = "-fetchedResultsController"
+            startingLineNumber = "169"
+            endingLineNumber = "169"
+            landmarkName = "-createCellData:image:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -90,12 +90,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "sprint01/MyTableViewController.m"
-            timestampString = "513645493.00896"
+            timestampString = "513689526.133501"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "49"
-            endingLineNumber = "49"
-            landmarkName = "-fetchedResultsController"
+            startingLineNumber = "170"
+            endingLineNumber = "170"
+            landmarkName = "-createCellData:image:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -106,12 +106,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "sprint01/MyTableViewController.m"
-            timestampString = "513645493.00896"
+            timestampString = "513688036.185576"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "50"
-            endingLineNumber = "50"
-            landmarkName = "-fetchedResultsController"
+            startingLineNumber = "150"
+            endingLineNumber = "150"
+            landmarkName = "-loadImage:index:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -122,12 +122,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "sprint01/MyTableViewController.m"
-            timestampString = "513645493.00896"
+            timestampString = "513688036.554866"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "51"
-            endingLineNumber = "51"
-            landmarkName = "-fetchedResultsController"
+            startingLineNumber = "149"
+            endingLineNumber = "149"
+            landmarkName = "-loadImage:index:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -138,12 +138,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "sprint01/MyTableViewController.m"
-            timestampString = "513645493.00896"
+            timestampString = "513689526.133501"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "53"
-            endingLineNumber = "53"
-            landmarkName = "-fetchedResultsController"
+            startingLineNumber = "155"
+            endingLineNumber = "155"
+            landmarkName = "-loadImage:index:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -153,13 +153,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "sprint01/MyTableViewController.m"
-            timestampString = "513645493.00896"
+            filePath = "sprint01/CustomTableCell.m"
+            timestampString = "513689526.133501"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "52"
-            endingLineNumber = "52"
-            landmarkName = "-fetchedResultsController"
+            startingLineNumber = "17"
+            endingLineNumber = "17"
+            landmarkName = "-customCellData:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -169,13 +169,29 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "sprint01/MyTableViewController.m"
-            timestampString = "513645761.19262"
+            filePath = "sprint01/CustomTableCell.m"
+            timestampString = "513689526.133501"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "46"
-            endingLineNumber = "46"
-            landmarkName = "-fetchedResultsController"
+            startingLineNumber = "19"
+            endingLineNumber = "19"
+            landmarkName = "-customCellData:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "sprint01/CustomTableCell.m"
+            timestampString = "513689526.133501"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "19"
+            endingLineNumber = "19"
+            landmarkName = "-customCellData:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
