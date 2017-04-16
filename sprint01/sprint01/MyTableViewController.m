@@ -9,7 +9,6 @@
 #import "MyTableViewController.h"
 #import "CustomTableCell.h"
 #import "MyTableCellViewController.h"
-#import "CellData.h"
 #import "CellDataModel.h"
 
 @interface MyTableViewController ()
@@ -24,16 +23,21 @@
 @property(nonatomic,strong) CustomTableCell *prototypeCell;
 @property (nonatomic,strong)NSURL *downloadImage;
 @property (nonatomic,strong)NSMutableArray *cells;
+@property (nonatomic)NSUInteger number;
 @end
 
 @implementation MyTableViewController
 @synthesize fetchedResultsController=_fetchedResultsController;
+static int k=0;
 - (void)viewDidLoad {
     [super viewDidLoad];
+    NSError *error;
+    
+    [[NSFileManager defaultManager]removeItemAtPath:[self storeURL].path error:&error];
     [self managedObjectModel];
     [self setupManagedObjectContext];
+    //[self deleteAllObjects:@"CellDataModel"];
     
-    NSError *error;
     if(![[self fetchedResultsController]performFetch:&error]){
         NSLog(@"Unresolved error %@,%@",error,[error userInfo]);
         exit(-1);
@@ -43,6 +47,16 @@
    
     // Do any additional setup after loading the view, typically from a nib.
 }
+//-(void)deleteAllObjects:(NSString *)entityDescription{
+//    NSFetchRequest *fetchRequest=[[NSFetchRequest alloc]init];
+//    NSEntityDescription *entity=[NSEntityDescription entityForName:entityDescription inManagedObjectContext:self.context];
+//    [fetchRequest setEntity:entity];
+//    NSError *error;
+//    NSArray *items=[self.context executeFetchRequest:fetchRequest error:&error];
+//    for(NSManagedObject *managedObject in items){
+//        [self.context deleteObject:managedObject];
+//    }
+//}
 -(void)viewDidUnload{
     [super viewDidUnload];
     self.fetchedResultsController=nil;
@@ -57,7 +71,7 @@
     NSSortDescriptor *sort=[[NSSortDescriptor alloc]initWithKey:@"title" ascending:NO];
     [fetchRequest setSortDescriptors:[NSArray arrayWithObject:sort]];
     [fetchRequest setFetchBatchSize:20];
-    NSFetchedResultsController *theFethResultsController=[[NSFetchedResultsController alloc]initWithFetchRequest:fetchRequest managedObjectContext:self.context sectionNameKeyPath:nil cacheName:@"Root"];
+    NSFetchedResultsController *theFethResultsController=[[NSFetchedResultsController alloc]initWithFetchRequest:fetchRequest managedObjectContext:self.context sectionNameKeyPath:nil cacheName:nil];
     self.fetchedResultsController=theFethResultsController;
     _fetchedResultsController.delegate=self;
     return _fetchedResultsController;
@@ -84,62 +98,66 @@
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 1;
-    //return [[[self fetchedResultsController]sections]count];
+    //return 1;
+    return [[[self fetchedResultsController]sections]count];
     
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)sectionIndex{
+    
     id sectionInfo=[[_fetchedResultsController sections]objectAtIndex:sectionIndex];
-    //return [sectionInfo numberOfObjects];
-    return [self.tableData count];
+    self.number =[sectionInfo numberOfObjects];
+    return self.number;
+    
+   
 }
-//-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-//    
-//     self.prototypeCell=[self.myTableView dequeueReusableCellWithIdentifier:myId];
-//    [self configureCell:self.prototypeCell forRowAtIndexPath:indexPath];
-//    self.prototypeCell.bounds=CGRectMake(0, 0, CGRectGetWidth(self.myTableView.bounds), CGRectGetHeight(self.prototypeCell.bounds));
-//    [self.prototypeCell layoutIfNeeded];
-//    CGSize size=[self.prototypeCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
-//   
-//    return size.height;
-//}
-//
-//-(void)configureCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
-//    
-//    if([cell isKindOfClass:[CustomTableCell class]]){
-//
-//                CustomTableCell *textCell=(CustomTableCell *)cell;
-//        dispatch_async(dispatch_get_main_queue(),^{
-//            
-//            CellDataModel *cellDataModel=[self createCellData:indexPath location:self.downloadImage];
-//            
-//            [textCell customCellData:cellDataModel];
-//        });
-//        
-//    }
-//        }
-//-(CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath{
-//    return UITableViewAutomaticDimension;
-//}
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+     self.prototypeCell=[self.myTableView dequeueReusableCellWithIdentifier:myId];
+    [self configureCell:self.prototypeCell forRowAtIndexPath:indexPath];
+    self.prototypeCell.bounds=CGRectMake(0, 0, CGRectGetWidth(self.myTableView.bounds), CGRectGetHeight(self.prototypeCell.bounds));
+    [self.prototypeCell layoutIfNeeded];
+    CGSize size=[self.prototypeCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+   
+    return size.height+2;
+}
+
+-(void)configureCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    if([cell isKindOfClass:[CustomTableCell class]]){
+
+                CustomTableCell *textCell=(CustomTableCell *)cell;
+        dispatch_async(dispatch_get_main_queue(),^{
+            
+            CellDataModel *cellDataModel=[_fetchedResultsController objectAtIndexPath:indexPath];
+            
+            [textCell customCellData:cellDataModel];
+        });
+        
+    }
+        }
+-(CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return UITableViewAutomaticDimension;
+}
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     CustomTableCell *cell=(CustomTableCell *)[tableView dequeueReusableCellWithIdentifier:myId forIndexPath:indexPath];
-    self.tableDictionary =[self.tableData objectAtIndex:indexPath.row];
-     NSURL *url=[NSURL URLWithString:[self.tableDictionary objectForKey:@"image_name"]];
+    CellDataModel *cellDataModel=[_fetchedResultsController objectAtIndexPath:indexPath];
+    
     
     void(^callback)(void)=^(void){
+        cellDataModel.image=self.downloadImage.path;
+        cell.cellImage.image=[[UIImage alloc]initWithContentsOfFile:cellDataModel.image];
         
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-        [self createCellData:indexPath location:self.downloadImage];
-        CellDataModel *cellDataModel=[_fetchedResultsController objectAtIndexPath:indexPath];
-        [cell customCellData:cellDataModel];
-        [self.myTableView reloadData];
-            
-        });
     };
+    self.tableDictionary =[self.tableData objectAtIndex:indexPath.row];
+    NSURL *url=[NSURL URLWithString:[self.tableDictionary objectForKey:@"image_name"]];
+    k++;
+    if(k<=self.tableData.count){
     [self loadImage:url index:indexPath.row callback:callback];
+    }
+    
+            [cell customCellData:cellDataModel];
+ 
   
         
         return cell;
@@ -183,8 +201,18 @@
             NSData *data=[NSData dataWithContentsOfFile:[destinationURL path]];
             NSDictionary *json=[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
             self.tableData=[json valueForKey:@"array"];
-        
         dispatch_async(dispatch_get_main_queue(),^{
+        for(int i=0;i<self.tableData.count;i++){
+            self.tableDictionary=[self.tableData objectAtIndex:i];
+            CellDataModel *newCell=[NSEntityDescription insertNewObjectForEntityForName:@"CellDataModel" inManagedObjectContext:self.context];
+            newCell.title=[self.tableDictionary objectForKey:@"title"];
+            newCell.subtitle=[self.tableDictionary objectForKey:@"subtitle"];
+            NSError *mocSaveError=nil;
+            if(![self.context save:&mocSaveError]){
+                NSLog(@"Save did not complete successfully. Error: %@",[mocSaveError localizedDescription]);
+            }
+        }
+        
             self.progressView.hidden=YES;
         [self.myTableView reloadData];
         });
@@ -197,24 +225,30 @@
 -(void)loadImage:(NSURL *)url index:(int)index callback:(void(^)(void))callback{
             NSURLSessionDownloadTask *downloadPhotoTask=[[NSURLSession sharedSession]downloadTaskWithURL:url completionHandler:^(NSURL *location,NSURLResponse *response,NSError *error){
                 
-                self.downloadImage=[location copy];
+                self.downloadImage=location;
                 
                 callback();
+                
+                
                 
             }];
             [downloadPhotoTask resume];
     
 }
--(void)createCellData:(NSIndexPath *)indexPath location:(NSURL*)location{
-    self.tableDictionary =[self.tableData objectAtIndex:indexPath.row];
-    
-    CellDataModel *newCell=[NSEntityDescription insertNewObjectForEntityForName:@"CellDataModel" inManagedObjectContext:self.context];
-    newCell.title=[self.tableDictionary objectForKey:@"title"];
-    newCell.subtitle=[self.tableDictionary objectForKey:@"subtitle"];
-    newCell.image=location.path;
-    [self.cellArray addObject:newCell];
-
-}
+//-(CellDataModel *)createCellData:(NSIndexPath *)indexPath location:(NSURL*)location{
+//    //self.tableDictionary =[self.tableData objectAtIndex:indexPath.row];
+//    
+//    
+//    //CellDataModel *cellDataModel=[_fetchedResultsController objectAtIndexPath:indexPath];
+//   CellDataModel *newCell=[_fetchedResultsController objectAtIndexPath:indexPath];
+//    
+//    newCell.image=location.path;
+//    NSError *mocSaveError=nil;
+//    if(![self.context save:&mocSaveError]){
+//        NSLog(@"Save did not complete successfully. Error: %@",[mocSaveError localizedDescription]);
+//    }
+//    return newCell;
+//}
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
     // The fetch controller is about to start sending change notifications, so prepare the table view for updates.
     [self.myTableView beginUpdates];
@@ -299,8 +333,8 @@
         
         NSIndexPath *indexPath =[self.myTableView indexPathForSelectedRow];
         MyTableCellViewController *cellView=(MyTableCellViewController *)segue.destinationViewController;
-       
-        cellView.cellData=[self.cellArray objectAtIndex:indexPath.row];
+        CellDataModel *cell=[_fetchedResultsController objectAtIndexPath:indexPath];
+        cellView.cellData=cell;
         
         
     }

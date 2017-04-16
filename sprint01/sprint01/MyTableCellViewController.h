@@ -7,12 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CellData.h"
+#import "CellDataModel.h"
 
 @interface MyTableCellViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UILabel *titleLable;
 @property (weak, nonatomic) IBOutlet UIImageView *cellImage;
 @property (weak, nonatomic) IBOutlet UILabel *subTitleLable;
-@property (weak,nonatomic) CellData *cellData;
+@property(strong,nonatomic)CellDataModel *cellData;
 
 @end

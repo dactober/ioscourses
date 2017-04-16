@@ -14,7 +14,7 @@
 @end
 
 @implementation MyTableCellViewController
-@synthesize cellData;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -28,9 +28,9 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    //self.titleLable.text=cellData.titleLabel;
-    //self.subTitleLable.text=cellData.subTitleLabel;
-    //self.cellImage.image=cellData.cellImage;
+    self.titleLable.text=self.cellData.title;
+    self.subTitleLable.text=self.cellData.subtitle;
+    self.cellImage.image=[[UIImage alloc]initWithContentsOfFile:self.cellData.image];
 }
 
 - (void)didReceiveMemoryWarning

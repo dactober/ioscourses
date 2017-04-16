@@ -11,12 +11,12 @@
 
 
 
--(void)customCellData:(CellDataModel *)cellData {//object:(id)object{
+-(void)customCellData:(CellDataModel *)cellData {
    
     //CellDataModel* model=object;
     self.titleLabel.text=cellData.title;
     self.subTitleLabel.text=cellData.subtitle;
-    self.cellImage.image=[[UIImage alloc]initWithContentsOfFile:cellData.image];
+    
     
 }
 

@@ -6,11 +6,11 @@
 //  Copyright (c) 2017 Aleksey Drachyov. All rights reserved.
 //
 #import <UIKit/UIKit.h>
-#import "CellData.h"
+#import "CellDataModel.h"
 @interface CustomTableCell : UITableViewCell
 @property (nonatomic,strong) IBOutlet UILabel *titleLabel;
 @property (nonatomic,strong) IBOutlet UILabel *subTitleLabel;
 @property (nonatomic,strong) IBOutlet UIImageView *cellImage;
--(void)customCellData:(CellDataModel *)cellData ;//object:(id)object;
+-(void)customCellData:(CellDataModel *)cellData ;
 
 @end
