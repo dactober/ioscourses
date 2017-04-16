@@ -26,10 +26,11 @@
 		01244EE51E81876400E39CD5 /* mushroom_risotto.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 01244EDC1E81876300E39CD5 /* mushroom_risotto.jpg */; };
 		01244EE61E81876400E39CD5 /* MyTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01244EDE1E81876300E39CD5 /* MyTableViewController.m */; };
 		01244EE71E81876400E39CD5 /* TableList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 01244EDF1E81876400E39CD5 /* TableList.plist */; };
+		018321C41EA026920011B019 /* CellData.m in Sources */ = {isa = PBXBuildFile; fileRef = 018321C31EA026920011B019 /* CellData.m */; };
 		0191341E1E9D88DA007E69F1 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0191341C1E9D88DA007E69F1 /* Model.xcdatamodeld */; };
 		019134201E9D8B00007E69F1 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0191341F1E9D8B00007E69F1 /* CoreData.framework */; };
 		01A5BF731E81AE21002C26FF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 01A5BF721E81AE21002C26FF /* Main.storyboard */; };
-		01B5A3441E9C174400B3C98C /* CellData.m in Sources */ = {isa = PBXBuildFile; fileRef = 01B5A3431E9C174400B3C98C /* CellData.m */; };
+		01D5B7611EA0171900ED189D /* CellDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D5B7601EA0171900ED189D /* CellDataModel.m */; };
 		01DAEFD31E92DB6300C94060 /* MyTableCellViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01DAEFD21E92DB6300C94060 /* MyTableCellViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -69,11 +70,13 @@
 		01244EDD1E81876300E39CD5 /* MyTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTableViewController.h; sourceTree = "<group>"; };
 		01244EDE1E81876300E39CD5 /* MyTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTableViewController.m; sourceTree = "<group>"; };
 		01244EDF1E81876400E39CD5 /* TableList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TableList.plist; sourceTree = "<group>"; };
+		018321C21EA026920011B019 /* CellData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellData.h; sourceTree = "<group>"; };
+		018321C31EA026920011B019 /* CellData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CellData.m; sourceTree = "<group>"; };
 		0191341D1E9D88DA007E69F1 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		0191341F1E9D8B00007E69F1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		01A5BF721E81AE21002C26FF /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
-		01B5A3421E9C174400B3C98C /* CellData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellData.h; sourceTree = "<group>"; };
-		01B5A3431E9C174400B3C98C /* CellData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CellData.m; sourceTree = "<group>"; };
+		01D5B75F1EA0171900ED189D /* CellDataModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellDataModel.h; sourceTree = "<group>"; };
+		01D5B7601EA0171900ED189D /* CellDataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CellDataModel.m; sourceTree = "<group>"; };
 		01DAEFD11E92DB6300C94060 /* MyTableCellViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTableCellViewController.h; sourceTree = "<group>"; };
 		01DAEFD21E92DB6300C94060 /* MyTableCellViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTableCellViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -184,11 +187,13 @@
 		019134211E9D94FB007E69F1 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				0191341C1E9D88DA007E69F1 /* Model.xcdatamodeld */,
 				01244ED71E81876300E39CD5 /* CustomTableCell.h */,
 				01244ED81E81876300E39CD5 /* CustomTableCell.m */,
-				01B5A3421E9C174400B3C98C /* CellData.h */,
-				01B5A3431E9C174400B3C98C /* CellData.m */,
-				0191341C1E9D88DA007E69F1 /* Model.xcdatamodeld */,
+				01D5B75F1EA0171900ED189D /* CellDataModel.h */,
+				01D5B7601EA0171900ED189D /* CellDataModel.m */,
+				018321C21EA026920011B019 /* CellData.h */,
+				018321C31EA026920011B019 /* CellData.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -316,12 +321,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				01244EE01E81876400E39CD5 /* AppDelegate.m in Sources */,
-				01B5A3441E9C174400B3C98C /* CellData.m in Sources */,
 				01244E9A1E81763800E39CD5 /* main.m in Sources */,
 				01244EE11E81876400E39CD5 /* CustomTableCell.m in Sources */,
 				01244EE61E81876400E39CD5 /* MyTableViewController.m in Sources */,
+				01D5B7611EA0171900ED189D /* CellDataModel.m in Sources */,
 				01DAEFD31E92DB6300C94060 /* MyTableCellViewController.m in Sources */,
 				0191341E1E9D88DA007E69F1 /* Model.xcdatamodeld in Sources */,
+				018321C41EA026920011B019 /* CellData.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

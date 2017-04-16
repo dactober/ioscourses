@@ -11,6 +11,6 @@
 @property (nonatomic,strong) IBOutlet UILabel *titleLabel;
 @property (nonatomic,strong) IBOutlet UILabel *subTitleLabel;
 @property (nonatomic,strong) IBOutlet UIImageView *cellImage;
--(void)customCellData:(CellData *)cellData;
+-(void)customCellData:(CellDataModel *)cellData ;//object:(id)object;
 
 @end

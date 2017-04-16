@@ -28,9 +28,9 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.titleLable.text=cellData.titleLabel;
-    self.subTitleLable.text=cellData.subTitleLabel;
-    self.cellImage.image=cellData.cellImage;
+    //self.titleLable.text=cellData.titleLabel;
+    //self.subTitleLable.text=cellData.subTitleLabel;
+    //self.cellImage.image=cellData.cellImage;
 }
 
 - (void)didReceiveMemoryWarning

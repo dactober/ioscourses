@@ -16,4 +16,7 @@
 @property (nonatomic, retain) NSString * subtitle;
 @property (nonatomic, retain) NSString * title;
 
+//+(instancetype)insertCellWithObjects:(NSString*)title subTitle:(NSString*)subTitle image:(NSString*)image
+//                              parent:(CellDataModel*)parent inManagedObjectContext:(NSManagedObjectContext*)managedObjectContext;
+//-(NSFetchedResultsController*)childrenFecthedResultsController;
 @end

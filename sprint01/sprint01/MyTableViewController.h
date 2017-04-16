@@ -12,8 +12,7 @@
 @property (nonatomic,strong) NSMutableArray *tableData;
 @property (nonatomic,strong) NSDictionary *tableDictionary;
 @property (weak, nonatomic) IBOutlet UITableView *myTableView;
-@property(nonatomic,retain) NSFetchedResultsController *fetchedResultsController;
-@property(nonatomic,strong) NSManagedObjectContext *managedObjectContext;
+@property(nonatomic,strong)NSFetchedResultsController *fetchedResultsController;
 @property(nonatomic,strong) NSMutableArray *cellArray;
 @end
 static NSString *myId=@"MyId";

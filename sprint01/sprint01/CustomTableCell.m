@@ -6,16 +6,17 @@
 //  Copyright (c) 2017 Aleksey Drachyov. All rights reserved.
 //
 #import "CustomTableCell.h"
-
+#import "CellDataModel.h"
 @implementation CustomTableCell
 
 
 
--(void)customCellData:(CellData *)cellData{
+-(void)customCellData:(CellDataModel *)cellData {//object:(id)object{
    
-    self.titleLabel.text=cellData.titleLabel;
-    self.subTitleLabel.text=cellData.subTitleLabel;
-    self.cellImage.image=cellData.cellImage;
+    //CellDataModel* model=object;
+    self.titleLabel.text=cellData.title;
+    self.subTitleLabel.text=cellData.subtitle;
+    self.cellImage.image=[[UIImage alloc]initWithContentsOfFile:cellData.image];
     
 }
 
