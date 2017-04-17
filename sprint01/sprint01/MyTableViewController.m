@@ -14,25 +14,23 @@
 @interface MyTableViewController ()
 @property(nonatomic,retain) NSManagedObjectModel *model;
 @property(nonatomic,strong) NSManagedObjectContext *context;
-
+@property(nonatomic,strong)NSMutableDictionary *cachedImages;
 @property (weak, nonatomic) IBOutlet UIProgressView *progressView;
 @property (weak, nonatomic) IBOutlet UIButton *loadData;
 - (IBAction)loadData:(id)sender;
 @property (nonatomic) NSURLSession *session;
 @property (nonatomic) NSURLSessionDownloadTask *downloadTask;
 @property(nonatomic,strong) CustomTableCell *prototypeCell;
-@property (nonatomic,strong)NSURL *downloadImage;
 @property (nonatomic,strong)NSMutableArray *cells;
 @property (nonatomic)NSUInteger number;
 @end
 
 @implementation MyTableViewController
-static bool flag=false;
 @synthesize fetchedResultsController=_fetchedResultsController;
 - (void)viewDidLoad {
     [super viewDidLoad];
     NSError *error;
-    
+    _cachedImages=[NSMutableDictionary dictionary];
     [[NSFileManager defaultManager]removeItemAtPath:[self storeURL].path error:&error];
     [self managedObjectModel];
     [self setupManagedObjectContext];
@@ -140,13 +138,15 @@ static bool flag=false;
     CustomTableCell *cell=(CustomTableCell *)[tableView dequeueReusableCellWithIdentifier:myId forIndexPath:indexPath];
     CellDataModel *cellDataModel=[_fetchedResultsController objectAtIndexPath:indexPath];
     
-    void(^callback)(void)=^(void){
-        cellDataModel.image=[self.downloadImage.path copy];
-        cell.cellImage.image=[[UIImage alloc]initWithContentsOfFile:cellDataModel.image];
+    void(^callback)(UIImage*)=^(UIImage *downloadedImage){
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+        cell.cellImage.image=downloadedImage;
+        });
     };
     
     self.tableDictionary =[self.tableData objectAtIndex:indexPath.row];
-    NSURL *url=[NSURL URLWithString:[self.tableDictionary objectForKey:@"image_name"]];
+    NSURL *url=[NSURL URLWithString:cellDataModel.image];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         [self loadImage:url callback:callback];
     });
@@ -194,13 +194,16 @@ static bool flag=false;
             NSDictionary *json=[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
             self.tableData=[json valueForKey:@"array"];
         dispatch_async(dispatch_get_main_queue(),^{
-          
-            
+    
             for(NSInteger i=self.number;i<self.tableData.count;i++){
             self.tableDictionary=[self.tableData objectAtIndex:i];
             CellDataModel *newCell=[NSEntityDescription insertNewObjectForEntityForName:@"CellDataModel" inManagedObjectContext:self.context];
-            [self createCellData:i newCell:newCell];
+            [self createCellData:self.tableDictionary newCell:newCell];
         }
+            NSError *mocSaveError=nil;
+            if(![self.context save:&mocSaveError]){
+                NSLog(@"Save did not complete successfully. Error: %@",[mocSaveError localizedDescription]);
+            }
                 self.progressView.hidden=YES;
                 [self.myTableView reloadData];
             
@@ -212,33 +215,39 @@ static bool flag=false;
         NSLog(@"Error during the copy: %@",[errorCopy localizedDescription]);
     }
 }
--(void)loadImage:(NSURL *)url callback:(void(^)(void))callback{
+-(void)loadImage:(NSURL *)url callback:(void(^)(UIImage*))callback{
             NSURLSessionDownloadTask *downloadPhotoTask=[[NSURLSession sharedSession]downloadTaskWithURL:url completionHandler:^(NSURL *location,NSURLResponse *response,NSError *error){
+                //NSString *tempDirectory=NSTemporaryDirectory();
+                NSFileManager *fileManager=[NSFileManager defaultManager];
+                NSArray *URLs=[fileManager URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask];
+                NSURL *documentsDirectory=[URLs objectAtIndex:0];
+                NSURL *originalURL=[response URL];
+                NSURL *destinationURL=[documentsDirectory URLByAppendingPathComponent:[originalURL lastPathComponent]];
+                NSError *errorCopy;
                 
-                self.downloadImage=location;
-                
-                callback();
-                
+                [fileManager removeItemAtURL:destinationURL error:NULL];
+                BOOL success=[fileManager copyItemAtURL:location toURL:destinationURL error:&errorCopy];
+                if(success){
+                _cachedImages[url]=destinationURL.path;
+                UIImage *image=[[UIImage alloc]initWithContentsOfFile:_cachedImages[url]];
+                callback(image);
+                }
+                else{
+                    NSLog(@"Error during the copy: %@",[errorCopy localizedDescription]);
+                }
                 
                 
             }];
             [downloadPhotoTask resume];
     
 }
--(CellDataModel *)createCellData:(NSInteger)index newCell:(CellDataModel *)newCell{// location:(NSURL*)location{
+-(CellDataModel *)createCellData:(NSDictionary*)dictionary newCell:(CellDataModel *)newCell{
     
-    self.tableDictionary =[self.tableData objectAtIndex:index];
-    //CellDataModel *cellDataModel=[_fetchedResultsController objectAtIndexPath:indexPath];
-    //CellDataModel *newCell=[_fetchedResultsController objectAtIndexPath:indexPath];
-    newCell.title=[self.tableDictionary objectForKey:@"title"];
-    newCell.subtitle=[self.tableDictionary objectForKey:@"subtitle"];
-    if(self.downloadImage.path!=nil){
-    newCell.image=self.downloadImage.path;
-    }
-    NSError *mocSaveError=nil;
-    if(![self.context save:&mocSaveError]){
-        NSLog(@"Save did not complete successfully. Error: %@",[mocSaveError localizedDescription]);
-    }
+    newCell.title=[dictionary objectForKey:@"title"];
+    newCell.subtitle=[dictionary objectForKey:@"subtitle"];
+    newCell.image=[dictionary objectForKey:@"image_name"];
+    
+    
     return newCell;
 }
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
