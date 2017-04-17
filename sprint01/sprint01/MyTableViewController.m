@@ -27,8 +27,8 @@
 @end
 
 @implementation MyTableViewController
+static bool flag=false;
 @synthesize fetchedResultsController=_fetchedResultsController;
-static int k=0;
 - (void)viewDidLoad {
     [super viewDidLoad];
     NSError *error;
@@ -145,22 +145,19 @@ static int k=0;
     
     
     void(^callback)(void)=^(void){
-        cellDataModel.image=self.downloadImage.path;
+        cellDataModel.image=[self.downloadImage.path copy];
         cell.cellImage.image=[[UIImage alloc]initWithContentsOfFile:cellDataModel.image];
         
     };
     self.tableDictionary =[self.tableData objectAtIndex:indexPath.row];
     NSURL *url=[NSURL URLWithString:[self.tableDictionary objectForKey:@"image_name"]];
-    k++;
-    if(k<=self.tableData.count){
-    [self loadImage:url index:indexPath.row callback:callback];
-    }
     
-            [cell customCellData:cellDataModel];
- 
-  
-        
-        return cell;
+    [self loadImage:url callback:callback];
+    //if(flag){
+    //cellDataModel=[self createCellData:indexPath.row newCell:cellDataModel];
+    //}
+    [cell customCellData:cellDataModel];
+    return cell;
 
     
 }
@@ -202,19 +199,17 @@ static int k=0;
             NSDictionary *json=[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
             self.tableData=[json valueForKey:@"array"];
         dispatch_async(dispatch_get_main_queue(),^{
-        for(int i=0;i<self.tableData.count;i++){
+          
+            
+        for(NSInteger i=0;i<self.tableData.count;i++){
             self.tableDictionary=[self.tableData objectAtIndex:i];
             CellDataModel *newCell=[NSEntityDescription insertNewObjectForEntityForName:@"CellDataModel" inManagedObjectContext:self.context];
-            newCell.title=[self.tableDictionary objectForKey:@"title"];
-            newCell.subtitle=[self.tableDictionary objectForKey:@"subtitle"];
-            NSError *mocSaveError=nil;
-            if(![self.context save:&mocSaveError]){
-                NSLog(@"Save did not complete successfully. Error: %@",[mocSaveError localizedDescription]);
-            }
+            [self createCellData:i newCell:newCell];
         }
-        
-            self.progressView.hidden=YES;
-        [self.myTableView reloadData];
+                self.progressView.hidden=YES;
+                [self.myTableView reloadData];
+            
+            
         });
         
     }
@@ -222,7 +217,7 @@ static int k=0;
         NSLog(@"Error during the copy: %@",[errorCopy localizedDescription]);
     }
 }
--(void)loadImage:(NSURL *)url index:(int)index callback:(void(^)(void))callback{
+-(void)loadImage:(NSURL *)url callback:(void(^)(void))callback{
             NSURLSessionDownloadTask *downloadPhotoTask=[[NSURLSession sharedSession]downloadTaskWithURL:url completionHandler:^(NSURL *location,NSURLResponse *response,NSError *error){
                 
                 self.downloadImage=location;
@@ -235,20 +230,22 @@ static int k=0;
             [downloadPhotoTask resume];
     
 }
-//-(CellDataModel *)createCellData:(NSIndexPath *)indexPath location:(NSURL*)location{
-//    //self.tableDictionary =[self.tableData objectAtIndex:indexPath.row];
-//    
-//    
-//    //CellDataModel *cellDataModel=[_fetchedResultsController objectAtIndexPath:indexPath];
-//   CellDataModel *newCell=[_fetchedResultsController objectAtIndexPath:indexPath];
-//    
-//    newCell.image=location.path;
-//    NSError *mocSaveError=nil;
-//    if(![self.context save:&mocSaveError]){
-//        NSLog(@"Save did not complete successfully. Error: %@",[mocSaveError localizedDescription]);
-//    }
-//    return newCell;
-//}
+-(CellDataModel *)createCellData:(NSInteger)index newCell:(CellDataModel *)newCell{// location:(NSURL*)location{
+    
+    self.tableDictionary =[self.tableData objectAtIndex:index];
+    //CellDataModel *cellDataModel=[_fetchedResultsController objectAtIndexPath:indexPath];
+    //CellDataModel *newCell=[_fetchedResultsController objectAtIndexPath:indexPath];
+    newCell.title=[self.tableDictionary objectForKey:@"title"];
+    newCell.subtitle=[self.tableDictionary objectForKey:@"subtitle"];
+    if(self.downloadImage.path!=nil){
+    newCell.image=self.downloadImage.path;
+    }
+    NSError *mocSaveError=nil;
+    if(![self.context save:&mocSaveError]){
+        NSLog(@"Save did not complete successfully. Error: %@",[mocSaveError localizedDescription]);
+    }
+    return newCell;
+}
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
     // The fetch controller is about to start sending change notifications, so prepare the table view for updates.
     [self.myTableView beginUpdates];
