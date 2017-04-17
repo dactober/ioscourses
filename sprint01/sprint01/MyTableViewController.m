@@ -127,12 +127,9 @@ static bool flag=false;
     if([cell isKindOfClass:[CustomTableCell class]]){
 
                 CustomTableCell *textCell=(CustomTableCell *)cell;
-        dispatch_async(dispatch_get_main_queue(),^{
-            
-            CellDataModel *cellDataModel=[_fetchedResultsController objectAtIndexPath:indexPath];
-            
+        CellDataModel *cellDataModel=[_fetchedResultsController objectAtIndexPath:indexPath];
             [textCell customCellData:cellDataModel];
-        });
+        
         
     }
         }
@@ -143,19 +140,17 @@ static bool flag=false;
     CustomTableCell *cell=(CustomTableCell *)[tableView dequeueReusableCellWithIdentifier:myId forIndexPath:indexPath];
     CellDataModel *cellDataModel=[_fetchedResultsController objectAtIndexPath:indexPath];
     
-    
     void(^callback)(void)=^(void){
         cellDataModel.image=[self.downloadImage.path copy];
         cell.cellImage.image=[[UIImage alloc]initWithContentsOfFile:cellDataModel.image];
-        
     };
+    
     self.tableDictionary =[self.tableData objectAtIndex:indexPath.row];
     NSURL *url=[NSURL URLWithString:[self.tableDictionary objectForKey:@"image_name"]];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        [self loadImage:url callback:callback];
+    });
     
-    [self loadImage:url callback:callback];
-    //if(flag){
-    //cellDataModel=[self createCellData:indexPath.row newCell:cellDataModel];
-    //}
     [cell customCellData:cellDataModel];
     return cell;
 
@@ -201,7 +196,7 @@ static bool flag=false;
         dispatch_async(dispatch_get_main_queue(),^{
           
             
-        for(NSInteger i=0;i<self.tableData.count;i++){
+            for(NSInteger i=self.number;i<self.tableData.count;i++){
             self.tableDictionary=[self.tableData objectAtIndex:i];
             CellDataModel *newCell=[NSEntityDescription insertNewObjectForEntityForName:@"CellDataModel" inManagedObjectContext:self.context];
             [self createCellData:i newCell:newCell];
