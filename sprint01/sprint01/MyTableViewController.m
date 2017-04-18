@@ -23,12 +23,21 @@
 @property(nonatomic,strong) CustomTableCell *prototypeCell;
 @property (nonatomic,strong)NSMutableArray *cells;
 @property (nonatomic)NSUInteger number;
+@property(nonatomic,strong)NSFileManager *fileManager;
+@property(nonatomic,strong)NSString *tempFolderPath;
 @end
 
 @implementation MyTableViewController
 @synthesize fetchedResultsController=_fetchedResultsController;
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.fileManager=[NSFileManager defaultManager];
+    NSArray *URLs=[self.fileManager URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask];
+    NSURL *documentsDirectory=[URLs objectAtIndex:0];
+    
+    self.tempFolderPath=[documentsDirectory.path stringByAppendingPathComponent:@"Temp"];
+    [self.fileManager createDirectoryAtPath:self.tempFolderPath withIntermediateDirectories:YES attributes:nil error:NULL];
+    [self.fileManager removeItemAtPath:self.tempFolderPath error:nil];
     NSError *error;
     _cachedImages=[NSMutableDictionary dictionary];
     [[NSFileManager defaultManager]removeItemAtPath:[self storeURL].path error:&error];
@@ -218,23 +227,27 @@
 -(void)loadImage:(NSURL *)url callback:(void(^)(UIImage*))callback{
             NSURLSessionDownloadTask *downloadPhotoTask=[[NSURLSession sharedSession]downloadTaskWithURL:url completionHandler:^(NSURL *location,NSURLResponse *response,NSError *error){
                 //NSString *tempDirectory=NSTemporaryDirectory();
-                NSFileManager *fileManager=[NSFileManager defaultManager];
-                NSArray *URLs=[fileManager URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask];
-                NSURL *documentsDirectory=[URLs objectAtIndex:0];
                 NSURL *originalURL=[response URL];
-                NSURL *destinationURL=[documentsDirectory URLByAppendingPathComponent:[originalURL lastPathComponent]];
+                NSString *fileName=[originalURL lastPathComponent];
                 NSError *errorCopy;
+                //[fileManager removeItemAtURL:destinationURL error:NULL];
+                if(![self.fileManager fileExistsAtPath:self.tempFolderPath]){
+                    NSError *error=nil;
+                    if(![self.fileManager createDirectoryAtPath:self.tempFolderPath withIntermediateDirectories:YES attributes:nil error:&error]){
+                        NSLog(@"Error:%@",error.localizedDescription);
+                    }
+                }
+                if([self.fileManager fileExistsAtPath:[self.tempFolderPath stringByAppendingString:[originalURL lastPathComponent]]]){
+                    [self.fileManager removeItemAtPath:[self.tempFolderPath stringByAppendingString:[originalURL lastPathComponent]] error:nil];
+                }
+                BOOL success=[self.fileManager copyItemAtPath:location.path toPath:[self.tempFolderPath  stringByAppendingPathComponent:[originalURL lastPathComponent]] error:&errorCopy];
                 
-                [fileManager removeItemAtURL:destinationURL error:NULL];
-                BOOL success=[fileManager copyItemAtURL:location toURL:destinationURL error:&errorCopy];
-                if(success){
-                _cachedImages[url]=destinationURL.path;
-                UIImage *image=[[UIImage alloc]initWithContentsOfFile:_cachedImages[url]];
+                    NSURL *destinationURL=[NSURL fileURLWithPath:[self.tempFolderPath stringByAppendingPathComponent:fileName]];
+                  //  destinationURL=[NSURL fileURLWithPath:[tempDirectory lastPathComponent]];
+                _cachedImages[url]=destinationURL;
+                UIImage *image=[[UIImage alloc]initWithContentsOfFile:[_cachedImages[url] path]];
                 callback(image);
-                }
-                else{
-                    NSLog(@"Error during the copy: %@",[errorCopy localizedDescription]);
-                }
+               
                 
                 
             }];
@@ -336,6 +349,7 @@
         MyTableCellViewController *cellView=(MyTableCellViewController *)segue.destinationViewController;
         CellDataModel *cell=[_fetchedResultsController objectAtIndexPath:indexPath];
         cellView.cellData=cell;
+        cellView.imagePath=_cachedImages[[NSURL URLWithString:cell.image]] ;
         
         
     }

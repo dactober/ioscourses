@@ -30,7 +30,7 @@
     // Do any additional setup after loading the view.
     self.titleLable.text=self.cellData.title;
     self.subTitleLable.text=self.cellData.subtitle;
-    self.cellImage.image=[[UIImage alloc]initWithContentsOfFile:self.cellData.image];
+    self.cellImage.image=[[UIImage alloc]initWithContentsOfFile:self.imagePath.path];
 }
 
 - (void)didReceiveMemoryWarning

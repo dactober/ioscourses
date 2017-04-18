@@ -14,5 +14,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *cellImage;
 @property (weak, nonatomic) IBOutlet UILabel *subTitleLable;
 @property(strong,nonatomic)CellDataModel *cellData;
+@property(strong,nonatomic)NSURL* imagePath;
 
 @end
