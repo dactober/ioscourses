@@ -36,11 +36,16 @@
     NSURL *documentsDirectory=[URLs objectAtIndex:0];
     
     self.tempFolderPath=[documentsDirectory.path stringByAppendingPathComponent:@"Temp"];
-    [self.fileManager createDirectoryAtPath:self.tempFolderPath withIntermediateDirectories:YES attributes:nil error:NULL];
-    [self.fileManager removeItemAtPath:self.tempFolderPath error:nil];
+    if(![self.fileManager fileExistsAtPath:self.tempFolderPath]){
+        NSError *error=nil;
+        if(![self.fileManager createDirectoryAtPath:self.tempFolderPath withIntermediateDirectories:YES attributes:nil error:&error]){
+            NSLog(@"Error:%@",error.localizedDescription);
+        }
+    }
+   // [self.fileManager removeItemAtPath:self.tempFolderPath error:nil];
     NSError *error;
     _cachedImages=[NSMutableDictionary dictionary];
-    [[NSFileManager defaultManager]removeItemAtPath:[self storeURL].path error:&error];
+   // [[NSFileManager defaultManager]removeItemAtPath:[self storeURL].path error:&error];
     [self managedObjectModel];
     [self setupManagedObjectContext];
     //[self deleteAllObjects:@"CellDataModel"];
@@ -240,7 +245,7 @@
                 if([self.fileManager fileExistsAtPath:[self.tempFolderPath stringByAppendingString:[originalURL lastPathComponent]]]){
                     [self.fileManager removeItemAtPath:[self.tempFolderPath stringByAppendingString:[originalURL lastPathComponent]] error:nil];
                 }
-                BOOL success=[self.fileManager copyItemAtPath:location.path toPath:[self.tempFolderPath  stringByAppendingPathComponent:[originalURL lastPathComponent]] error:&errorCopy];
+                [self.fileManager copyItemAtPath:location.path toPath:[self.tempFolderPath  stringByAppendingPathComponent:[originalURL lastPathComponent]] error:&errorCopy];
                 
                     NSURL *destinationURL=[NSURL fileURLWithPath:[self.tempFolderPath stringByAppendingPathComponent:fileName]];
                   //  destinationURL=[NSURL fileURLWithPath:[tempDirectory lastPathComponent]];
