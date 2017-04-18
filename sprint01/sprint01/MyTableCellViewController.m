@@ -33,12 +33,6 @@
     self.cellImage.image=[[UIImage alloc]initWithContentsOfFile:self.imagePath.path];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 /*
 #pragma mark - Navigation
 

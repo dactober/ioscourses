@@ -34,7 +34,6 @@
     self.fileManager=[NSFileManager defaultManager];
     NSArray *URLs=[self.fileManager URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask];
     NSURL *documentsDirectory=[URLs objectAtIndex:0];
-    
     self.tempFolderPath=[documentsDirectory.path stringByAppendingPathComponent:@"Temp"];
     if(![self.fileManager fileExistsAtPath:self.tempFolderPath]){
         NSError *error=nil;
@@ -48,7 +47,6 @@
    // [[NSFileManager defaultManager]removeItemAtPath:[self storeURL].path error:&error];
     [self managedObjectModel];
     [self setupManagedObjectContext];
-    //[self deleteAllObjects:@"CellDataModel"];
     
     if(![[self fetchedResultsController]performFetch:&error]){
         NSLog(@"Unresolved error %@,%@",error,[error userInfo]);
@@ -59,16 +57,7 @@
    
     // Do any additional setup after loading the view, typically from a nib.
 }
-//-(void)deleteAllObjects:(NSString *)entityDescription{
-//    NSFetchRequest *fetchRequest=[[NSFetchRequest alloc]init];
-//    NSEntityDescription *entity=[NSEntityDescription entityForName:entityDescription inManagedObjectContext:self.context];
-//    [fetchRequest setEntity:entity];
-//    NSError *error;
-//    NSArray *items=[self.context executeFetchRequest:fetchRequest error:&error];
-//    for(NSManagedObject *managedObject in items){
-//        [self.context deleteObject:managedObject];
-//    }
-//}
+
 -(void)viewDidUnload{
     [super viewDidUnload];
     self.fetchedResultsController=nil;
@@ -231,29 +220,31 @@
 }
 -(void)loadImage:(NSURL *)url callback:(void(^)(UIImage*))callback{
             NSURLSessionDownloadTask *downloadPhotoTask=[[NSURLSession sharedSession]downloadTaskWithURL:url completionHandler:^(NSURL *location,NSURLResponse *response,NSError *error){
-                //NSString *tempDirectory=NSTemporaryDirectory();
                 NSURL *originalURL=[response URL];
                 NSString *fileName=[originalURL lastPathComponent];
                 NSError *errorCopy;
-                //[fileManager removeItemAtURL:destinationURL error:NULL];
                 if(![self.fileManager fileExistsAtPath:self.tempFolderPath]){
                     NSError *error=nil;
                     if(![self.fileManager createDirectoryAtPath:self.tempFolderPath withIntermediateDirectories:YES attributes:nil error:&error]){
                         NSLog(@"Error:%@",error.localizedDescription);
                     }
                 }
-                if([self.fileManager fileExistsAtPath:[self.tempFolderPath stringByAppendingString:[originalURL lastPathComponent]]]){
-                    [self.fileManager removeItemAtPath:[self.tempFolderPath stringByAppendingString:[originalURL lastPathComponent]] error:nil];
+                if([self.fileManager fileExistsAtPath:[self.tempFolderPath stringByAppendingPathComponent:fileName]]){
+                    [self.fileManager removeItemAtPath:[self.tempFolderPath stringByAppendingPathComponent:fileName] error:nil];
                 }
-                [self.fileManager copyItemAtPath:location.path toPath:[self.tempFolderPath  stringByAppendingPathComponent:[originalURL lastPathComponent]] error:&errorCopy];
-                
+               Boolean success= [self.fileManager copyItemAtPath:location.path toPath:[self.tempFolderPath  stringByAppendingPathComponent:fileName] error:&errorCopy];
+                if(success){
                     NSURL *destinationURL=[NSURL fileURLWithPath:[self.tempFolderPath stringByAppendingPathComponent:fileName]];
-                  //  destinationURL=[NSURL fileURLWithPath:[tempDirectory lastPathComponent]];
                 _cachedImages[url]=destinationURL;
-                UIImage *image=[[UIImage alloc]initWithContentsOfFile:[_cachedImages[url] path]];
+                NSData *data=[NSKeyedArchiver archivedDataWithRootObject:_cachedImages];
+                    [self.fileManager createFileAtPath:[self.tempFolderPath stringByAppendingString:@"Cache.plist"] contents:data attributes:nil];
+                UIImage *image=[[UIImage alloc]initWithContentsOfFile:destinationURL.path];
                 callback(image);
                
-                
+                        }
+                else{
+                    NSLog(@"Error: %@",errorCopy.localizedDescription);
+                }
                 
             }];
             [downloadPhotoTask resume];
